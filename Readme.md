@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Михаил Беззапонный](https://up.htmlacademy.ru/javascript/14/user/782277).
-* Наставник: `Вероника Самохина`.
+* Наставник: [Вероника Самохина](https://htmlacademy.ru/profile/id7607).
 
 ---
 
