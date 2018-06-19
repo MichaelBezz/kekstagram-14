@@ -29,9 +29,8 @@ var EXAMPLE_DESCRIPTION = [
 var quantityPhotoCard = 25;
 
 var getArrayElements = function (arr, goNumber, endNumber) {
-  goNumber -= 1;
-  for (var i = goNumber; i < endNumber; i++) {
-    goNumber += 1;
+  for (var i = goNumber--; i <= endNumber; i++) {
+    goNumber++;
     arr.push(goNumber);
   }
   return arr;
@@ -86,24 +85,22 @@ photocardListElement.appendChild(fragment);
 var mainPhotocard = document.querySelector('.big-picture');
 mainPhotocard.classList.remove('.hidden');
 
-/*
 var renderMainPhotocard = function () {
   var photocardMainElement = photocardTemplate.cloneNode(true);
 
   photocardMainElement.querySelector('.big-picture__img').src = newPhotocardAll[0].url;
   photocardMainElement.querySelector('.likes-count').textContent = newPhotocardAll[0].likes;
-  \\ photocardMainElement.querySelector('.comments-count').textContent = newPhotocardAll[0].comments;
-  \\ photocardMainElement.querySelector('.comments-count').textContent = newPhotocardAll[0].comments;
+  photocardMainElement.querySelector('.comments-count').textContent = newPhotocardAll[0].comments.length;
+  photocardMainElement.querySelector('.social__comments').textContent = newPhotocardAll[0].comments;
   photocardMainElement.querySelector('.social__caption').textContent = newPhotocardAll[0].description;
 
   return photocardMainElement;
 };
 
-renderMainPhotocard(mainPhotocard);
+mainPhotocard = renderMainPhotocard();
 
 var commentCounter = document.querySelector('.social__comment-count');
 commentCounter.classList.add('.visually-hidden');
 
 var downloadComments = document.querySelector('.social__loadmore');
 downloadComments.classList.add('.visually-hidden');
-*/
