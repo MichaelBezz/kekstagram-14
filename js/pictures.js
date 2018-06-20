@@ -4,11 +4,9 @@ var EXAMPLE_URL = [];
 var START_EXAMPLE_URL = 1;
 var END_EXAMPLE_URL = 25;
 
-var EXAMPLE_IMG_URL = [];
 var START_EXAMPLE_IMGURL = 1;
 var END_EXAMPLE_IMGURL = 6;
 
-var EXAMPLE_LIKES = [];
 var START_EXAMPLE_LIKES = 15;
 var END_EXAMPLE_LIKES = 200;
 
@@ -33,8 +31,8 @@ var EXAMPLE_DESCRIPTION = [
 var PHOTOCARD_QUANTITY = 25;
 var COMMENTS_QUANTITY = 2;
 
-var getArrayElements = function (arr, startNumb, endNumber) {
-  for (var i = startNumb; i <= endNumber; i++) {
+var getArrayElements = function (arr, startNumber, endNumber) {
+  for (var i = startNumber; i <= endNumber; i++) {
     arr.push(i);
   }
   return arr;
@@ -45,6 +43,11 @@ var getRandomArrayElement = function (arr) {
   return arr[randomNumber];
 };
 
+var getRandomNumber = function (minNumber, maxNumber) {
+  var numberArr = Math.floor(Math.random() * (maxNumber - minNumber) + minNumber);
+  return numberArr;
+};
+
 var removeElements = function (contain, selector) {
   var element = contain.querySelectorAll(selector);
   for (var i = 0; i < element.length; i++) {
@@ -53,8 +56,6 @@ var removeElements = function (contain, selector) {
 };
 
 EXAMPLE_URL = getArrayElements(EXAMPLE_URL, START_EXAMPLE_URL, END_EXAMPLE_URL);
-EXAMPLE_IMG_URL = getArrayElements(EXAMPLE_IMG_URL, START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL);
-EXAMPLE_LIKES = getArrayElements(EXAMPLE_LIKES, START_EXAMPLE_LIKES, END_EXAMPLE_LIKES);
 
 var createComments = function () {
   var arrComments = [];
@@ -70,7 +71,7 @@ var createPhotocards = function () {
     var newPhotocard = {};
     var urlCard = 'photos/' + EXAMPLE_URL[i] + '.jpg';
     newPhotocard.url = urlCard;
-    newPhotocard.likes = getRandomArrayElement(EXAMPLE_LIKES);
+    newPhotocard.likes = getRandomNumber(START_EXAMPLE_LIKES, END_EXAMPLE_LIKES);
     newPhotocard.comments = createComments();
     newPhotocard.description = getRandomArrayElement(EXAMPLE_DESCRIPTION);
     photocards.push(newPhotocard);
@@ -110,7 +111,7 @@ var createPhotocardComments = function (container) {
   removeElements(conteinerComment, '.social__comment');
 
   for (var j = 0; j < newPhotocardAll[0].comments.length; j++) {
-    var imgSrc = 'img/avatar-' + getRandomArrayElement(EXAMPLE_IMG_URL) + '.svg';
+    var imgSrc = 'img/avatar-' + getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg';
 
     var comment = document.createElement('li');
     comment.classList.add('social__comment', 'social__comment--text');
@@ -135,7 +136,7 @@ var createPhotocardComments = function (container) {
 var renderMainPhotocard = function () {
   var mainPhotocardItem = newPhotocardAll[0];
 
-  mainPhotocard.querySelector('.big-picture__img').src = mainPhotocardItem.url;
+  mainPhotocard.querySelector('.big-picture__img img').src = mainPhotocardItem.url;
   mainPhotocard.querySelector('.likes-count').textContent = mainPhotocardItem.likes;
   mainPhotocard.querySelector('.comments-count').textContent = mainPhotocardItem.comments.length;
   createPhotocardComments(mainPhotocard.querySelector('.social__comments'));
