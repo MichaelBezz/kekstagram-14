@@ -4,6 +4,10 @@ var EXAMPLE_URL = [];
 var START_EXAMPLE_URL = 1;
 var END_EXAMPLE_URL = 25;
 
+var EXAMPLE_IMG_URL = [];
+var START_EXAMPLE_IMGURL = 1;
+var END_EXAMPLE_IMGURL = 6;
+
 var EXAMPLE_LIKES = [];
 var START_EXAMPLE_LIKES = 15;
 var END_EXAMPLE_LIKES = 200;
@@ -42,6 +46,7 @@ var getRandomArrayElement = function (arr) {
 };
 
 EXAMPLE_URL = getArrayElements(EXAMPLE_URL, START_EXAMPLE_URL, END_EXAMPLE_URL);
+EXAMPLE_IMG_URL = getArrayElements(EXAMPLE_IMG_URL, START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL);
 EXAMPLE_LIKES = getArrayElements(EXAMPLE_LIKES, START_EXAMPLE_LIKES, END_EXAMPLE_LIKES);
 
 var createComments = function () {
@@ -76,9 +81,9 @@ var photocardTemplate = document.querySelector('#picture')
 var renderPhotocard = function (item) {
   var photocardElement = photocardTemplate.cloneNode(true);
 
-  photocardElement.querySelector('src').src = item.url;
+  photocardElement.querySelector('.picture__img').src = item.url;
   photocardElement.querySelector('.picture__stat--likes').textContent = item.likes;
-  photocardElement.querySelector('.picture__stat--comments').textContent = item.comments;
+  photocardElement.querySelector('.picture__stat--comments').textContent = item.comments.length;
 
   return photocardElement;
 };
@@ -93,13 +98,37 @@ photocardListElement.appendChild(fragment);
 var mainPhotocard = document.querySelector('.big-picture');
 mainPhotocard.classList.remove('hidden');
 
+var createPhotocardComments = function (container) {
+  for (var j = 0; j < newPhotocardAll[0].comments.length; j++) {
+    var imgSrc = 'img/avatar-' + getRandomArrayElement(EXAMPLE_IMG_URL) + '.svg';
+
+    var comment = document.createElement('li');
+    comment.classList.add('social__comment', 'social__comment--text');
+
+    var commentImg = document.createElement('img');
+    commentImg.classList.add('social__picture');
+    commentImg.src = imgSrc;
+    commentImg.alt = 'Аватар комментатора фотографии';
+    commentImg.width = '35';
+    commentImg.height = '35';
+
+    var commentText = document.createElement('p');
+    commentText.classList.add('social__text');
+    commentText.textContent = newPhotocardAll[0].comments[j];
+
+    comment.appendChild(commentImg);
+    comment.appendChild(commentText);
+    container.appendChild(comment);
+  }
+};
+
 var renderMainPhotocard = function () {
   var mainPhotocardItem = newPhotocardAll[0];
 
   mainPhotocard.querySelector('.big-picture__img').src = mainPhotocardItem.url;
   mainPhotocard.querySelector('.likes-count').textContent = mainPhotocardItem.likes;
   mainPhotocard.querySelector('.comments-count').textContent = mainPhotocardItem.comments.length;
-  mainPhotocard.querySelector('.social__comments').textContent = mainPhotocardItem.comments;
+  createPhotocardComments(mainPhotocard.querySelector('.social__comments'));
   mainPhotocard.querySelector('.social__caption').textContent = mainPhotocardItem.description;
 
 };
