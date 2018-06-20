@@ -45,6 +45,13 @@ var getRandomArrayElement = function (arr) {
   return arr[randomNumber];
 };
 
+var removeElements = function (contain, selector) {
+  var element = contain.querySelectorAll(selector);
+  for (var i = 0; i < element.length; i++) {
+    contain.removeChild(element[i]);
+  }
+};
+
 EXAMPLE_URL = getArrayElements(EXAMPLE_URL, START_EXAMPLE_URL, END_EXAMPLE_URL);
 EXAMPLE_IMG_URL = getArrayElements(EXAMPLE_IMG_URL, START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL);
 EXAMPLE_LIKES = getArrayElements(EXAMPLE_LIKES, START_EXAMPLE_LIKES, END_EXAMPLE_LIKES);
@@ -99,7 +106,9 @@ var mainPhotocard = document.querySelector('.big-picture');
 mainPhotocard.classList.remove('hidden');
 
 var createPhotocardComments = function (container) {
-  container.removeChild('li');
+  var conteinerComment = document.querySelector('.social__comments');
+  removeElements(conteinerComment, '.social__comment');
+
   for (var j = 0; j < newPhotocardAll[0].comments.length; j++) {
     var imgSrc = 'img/avatar-' + getRandomArrayElement(EXAMPLE_IMG_URL) + '.svg';
 
