@@ -1,12 +1,12 @@
 'use strict';
 
 var EXAMPLE_URL = [];
-var goNumberExampleUrl = 1;
-var endNumberExampleUrl = 25;
+var START_EXAMPLE_URL = 1;
+var END_EXAMPLE_URL = 25;
 
 var EXAMPLE_LIKES = [];
-var goNumberExampleLikes = 15;
-var endNumberExampleLikes = 200;
+var START_EXAMPLE_LIKES = 15;
+var END_EXAMPLE_LIKES = 200;
 
 
 var EXAMPLE_COMMENTS = [
@@ -26,12 +26,12 @@ var EXAMPLE_DESCRIPTION = [
   'Вот это тачка!'
 ];
 
-var quantityPhotoCard = 25;
+var PHOTOCARD_QUANTITY = 25;
+var COMMENTS_QUANTITY = 2;
 
-var getArrayElements = function (arr, goNumber, endNumber) {
-  for (var i = goNumber--; i <= endNumber; i++) {
-    goNumber++;
-    arr.push(goNumber);
+var getArrayElements = function (arr, startNumb, endNumber) {
+  for (var i = startNumb; i <= endNumber; i++) {
+    arr.push(i);
   }
   return arr;
 };
@@ -41,21 +41,29 @@ var getRandomArrayElement = function (arr) {
   return arr[randomNumber];
 };
 
-EXAMPLE_URL = getArrayElements(EXAMPLE_URL, goNumberExampleUrl, endNumberExampleUrl);
-EXAMPLE_LIKES = getArrayElements(EXAMPLE_LIKES, goNumberExampleLikes, endNumberExampleLikes);
+EXAMPLE_URL = getArrayElements(EXAMPLE_URL, START_EXAMPLE_URL, END_EXAMPLE_URL);
+EXAMPLE_LIKES = getArrayElements(EXAMPLE_LIKES, START_EXAMPLE_LIKES, END_EXAMPLE_LIKES);
+
+var createComments = function () {
+  var arrComments = [];
+  for (var i = 0; i < COMMENTS_QUANTITY; i++) {
+    arrComments.push(getRandomArrayElement(EXAMPLE_COMMENTS));
+  }
+  return arrComments;
+};
 
 var createPhotocards = function () {
-  var Photocards = [];
-  for (var i = 0; i < quantityPhotoCard; i++) {
-    var urlCard = 'photos/' + EXAMPLE_URL[i] + '.jpg';
+  var photocards = [];
+  for (var i = 0; i < PHOTOCARD_QUANTITY; i++) {
     var newPhotocard = {};
+    var urlCard = 'photos/' + EXAMPLE_URL[i] + '.jpg';
     newPhotocard.url = urlCard;
     newPhotocard.likes = getRandomArrayElement(EXAMPLE_LIKES);
-    newPhotocard.comments = getRandomArrayElement(EXAMPLE_COMMENTS);
+    newPhotocard.comments = createComments();
     newPhotocard.description = getRandomArrayElement(EXAMPLE_DESCRIPTION);
-    Photocards.push(newPhotocard);
+    photocards.push(newPhotocard);
   }
-  return Photocards;
+  return photocards;
 };
 
 var newPhotocardAll = createPhotocards();
@@ -65,42 +73,41 @@ var photocardTemplate = document.querySelector('#picture')
     .content
     .querySelector('.picture__link');
 
-var renderPhotocard = function () {
+var renderPhotocard = function (item) {
   var photocardElement = photocardTemplate.cloneNode(true);
 
-  photocardElement.querySelector('src').src = newPhotocardAll[i].url;
-  photocardElement.querySelector('.picture__stat--likes').textContent = newPhotocardAll[i].likes;
-  photocardElement.querySelector('.picture__stat--comments').textContent = newPhotocardAll[i].comments;
+  photocardElement.querySelector('src').src = item.url;
+  photocardElement.querySelector('.picture__stat--likes').textContent = item.likes;
+  photocardElement.querySelector('.picture__stat--comments').textContent = item.comments;
 
   return photocardElement;
 };
 
 var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < quantityPhotoCard; i++) {
+for (var i = 0; i < PHOTOCARD_QUANTITY; i++) {
   fragment.appendChild(renderPhotocard(newPhotocardAll[i]));
 }
 photocardListElement.appendChild(fragment);
 
 var mainPhotocard = document.querySelector('.big-picture');
-mainPhotocard.classList.remove('.hidden');
+mainPhotocard.classList.remove('hidden');
 
 var renderMainPhotocard = function () {
-  var photocardMainElement = photocardTemplate.cloneNode(true);
+  var mainPhotocardItem = newPhotocardAll[0];
 
-  photocardMainElement.querySelector('.big-picture__img').src = newPhotocardAll[0].url;
-  photocardMainElement.querySelector('.likes-count').textContent = newPhotocardAll[0].likes;
-  photocardMainElement.querySelector('.comments-count').textContent = newPhotocardAll[0].comments.length;
-  photocardMainElement.querySelector('.social__comments').textContent = newPhotocardAll[0].comments;
-  photocardMainElement.querySelector('.social__caption').textContent = newPhotocardAll[0].description;
+  mainPhotocard.querySelector('.big-picture__img').src = mainPhotocardItem.url;
+  mainPhotocard.querySelector('.likes-count').textContent = mainPhotocardItem.likes;
+  mainPhotocard.querySelector('.comments-count').textContent = mainPhotocardItem.comments.length;
+  mainPhotocard.querySelector('.social__comments').textContent = mainPhotocardItem.comments;
+  mainPhotocard.querySelector('.social__caption').textContent = mainPhotocardItem.description;
 
-  return photocardMainElement;
 };
 
-mainPhotocard = renderMainPhotocard();
+renderMainPhotocard();
 
 var commentCounter = document.querySelector('.social__comment-count');
-commentCounter.classList.add('.visually-hidden');
+commentCounter.classList.add('visually-hidden');
 
 var downloadComments = document.querySelector('.social__loadmore');
-downloadComments.classList.add('.visually-hidden');
+downloadComments.classList.add('visually-hidden');
