@@ -99,6 +99,7 @@ var mainPhotocard = document.querySelector('.big-picture');
 mainPhotocard.classList.remove('hidden');
 
 var createPhotocardComments = function (container) {
+  container.removeChild('li');
   for (var j = 0; j < newPhotocardAll[0].comments.length; j++) {
     var imgSrc = 'img/avatar-' + getRandomArrayElement(EXAMPLE_IMG_URL) + '.svg';
 
