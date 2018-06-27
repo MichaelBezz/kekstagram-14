@@ -97,20 +97,25 @@ var renderPhotocard = function (item) {
 
 var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < PHOTOCARD_QUANTITY; i++) {
-  fragment.appendChild(renderPhotocard(newPhotocardAll[i]));
-}
-photocardListElement.appendChild(fragment);
-/*
+var createListElement = function () {
+  for (var i = 0; i < PHOTOCARD_QUANTITY; i++) {
+    fragment.appendChild(renderPhotocard(newPhotocardAll[i]));
+  }
+  photocardListElement.appendChild(fragment);
+};
+
+createListElement();
+
 // открываем показ фотографии в полноэкранном режиме
 var mainPhotocard = document.querySelector('.big-picture');
-mainPhotocard.classList.remove('hidden');
+// mainPhotocard.classList.remove('hidden');
+
 // функция, которая создает сложную разметку для комментариев
 var createPhotocardComments = function (container) {
   var conteinerComment = document.querySelector('.social__comments');
   removeElements(conteinerComment, '.social__comment');
 
-  for (var j = 0; j < newPhotocardAll[0].comments.length; j++) {
+  for (var i = 0; i < newPhotocardAll[0].comments.length; i++) {
     var imgSrc = 'img/avatar-' + getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg';
 
     var comment = document.createElement('li');
@@ -125,7 +130,7 @@ var createPhotocardComments = function (container) {
 
     var commentText = document.createElement('p');
     commentText.classList.add('social__text');
-    commentText.textContent = newPhotocardAll[0].comments[j];
+    commentText.textContent = newPhotocardAll[0].comments[i];
 
     comment.appendChild(commentImg);
     comment.appendChild(commentText);
@@ -144,17 +149,192 @@ var renderMainPhotocard = function () {
 
 };
 
-renderMainPhotocard();
+// renderMainPhotocard();
+
 // прячем блок счетчика комментариев
 var commentCounter = document.querySelector('.social__comment-count');
 commentCounter.classList.add('visually-hidden');
 // прячем загрузку новых комментариев
 var downloadComments = document.querySelector('.social__loadmore');
-downloadComments.classList.add('visually-hidden'); */
+downloadComments.classList.add('visually-hidden');
+
 
 // #15 Личный проект: подробности
-// Загрузка изображения и показ формы редактирования
+
 var imgUpload = document.querySelector('.img-upload');
+
+// 2.1. Масштаб: редактирование размера изображения //
+var imgUploadPreview = imgUpload.querySelector('.img-upload__preview');
+var resizeControlMinus = imgUpload.querySelector('.resize__control--minus');
+var resizeControlPlus = imgUpload.querySelector('.resize__control--plus');
+var resizeControlValue = imgUpload.querySelector('.resize__control--value');
+
+var MAX_SIZE_VALUE = 100;
+var MIN_SIZE_VALUE = 25;
+var RESIZE_STEP = 25;
+var PERCENT = '%';
+
+// функция, которая изменяет масштаб изображения
+var onValueChange = function () {
+  resizeControlValue.value = MAX_SIZE_VALUE + PERCENT;
+  var currentValue = MAX_SIZE_VALUE;
+
+  resizeControlPlus.addEventListener('click', function () {
+    currentValue += RESIZE_STEP;
+    resizeControlValue.value = currentValue + PERCENT;
+    imgUploadPreview.style.transform = 'scale(' + currentValue / 100 + ')';
+    if (currentValue === MAX_SIZE_VALUE) {
+      resizeControlPlus.disabled = true;
+    } else if (currentValue > MIN_SIZE_VALUE) {
+      resizeControlMinus.disabled = false;
+    }
+  });
+
+  resizeControlMinus.addEventListener('click', function () {
+    currentValue -= RESIZE_STEP;
+    resizeControlValue.value = currentValue + PERCENT;
+    imgUploadPreview.style.transform = 'scale(' + currentValue / 100 + ')';
+    if (currentValue === MIN_SIZE_VALUE) {
+      resizeControlMinus.disabled = true;
+    } else if (currentValue < MAX_SIZE_VALUE) {
+      resizeControlPlus.disabled = false;
+    }
+  });
+};
+
+// 2.2. Наложение эффекта на изображение //
+var imgUploadEffects = imgUpload.querySelector('.img-upload__effects');
+
+var FILTER_SELECTOR_PREFIX = 'effect-';
+var FILTER_CLASS_PREFIX = 'effects__preview--';
+// массив, с объектами для работы с фильтрами
+var FILTERS = [
+  {
+    id: 'none',
+    effect: null
+  },
+  {
+    id: 'chrome',
+    effect: {
+      name: 'grayscale',
+      min: 0,
+      max: 1,
+      unit: ''
+    }
+  },
+  {
+    id: 'sepia',
+    effect: {
+      name: 'sepia',
+      min: 0,
+      max: 1,
+      unit: ''
+    }
+  },
+  {
+    id: 'marvin',
+    effect: {
+      name: 'invert',
+      min: 0,
+      max: 100,
+      unit: '%'
+    }
+  },
+  {
+    id: 'phobos',
+    effect: {
+      name: 'blur',
+      min: 0,
+      max: 3,
+      unit: 'px'
+    }
+  },
+  {
+    id: 'heat',
+    effect: {
+      name: 'brightness',
+      min: 1,
+      max: 3,
+      unit: ''
+    }
+  }
+];
+// задаем фильтр по умолчанию
+var currentEffect = FILTERS[5];
+// функция, которая: задает фильтр по умолчанию, перебирает массив и вешает обработчик на пин
+var onEffectsSet = function () {
+  imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
+
+  startValuePin();
+
+  for (var i = 0; i < FILTERS.length; i++) {
+    addEffectListener(i);
+  }
+
+  scalePin.addEventListener('mouseup', function () {
+    onCurrentScaleValueMouseup();
+  });
+};
+// функция, которая задает значение пина
+var onCurrentScaleValueMouseup = function () {
+  var valueOfEffect = getScaleValue() * (currentEffect.effect.max - currentEffect.effect.min) + currentEffect.effect.min + currentEffect.effect.unit;
+  imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffect + ')';
+};
+// функция, которая выбирает фильтр и обновляет значение переменной текущего фильтра
+var addEffectListener = function (i) {
+  var effectId = FILTER_SELECTOR_PREFIX + FILTERS[i].id;
+  var effectElement = imgUploadEffects.querySelector('#' + effectId);
+  effectElement.addEventListener('click', function () {
+    currentEffect = FILTERS[i];
+    onResetEffectClick();
+    if (FILTERS[i].id === 'none') {
+      imgUploadScale.classList.add('hidden');
+    }
+  });
+};
+// функция, которая удаляет классы стилей у элементов и назначает их
+var onResetEffectClick = function () {
+  for (var i = 0; i < FILTERS.length; i++) {
+    imgUploadPreview.classList.remove(FILTER_CLASS_PREFIX + FILTERS[i].id);
+    imgUploadPreview.style.filter = null;
+    if (FILTERS[i].id === 'none') {
+      imgUploadScale.classList.remove('hidden');
+    }
+  }
+  imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
+};
+
+var imgUploadScale = imgUpload.querySelector('.img-upload__scale');
+var scalePin = imgUploadScale.querySelector('.scale__pin');
+var scaleLine = imgUploadScale.querySelector('.scale__line');
+var scaleValue = imgUploadScale.querySelector('.scale__value');
+var scaleLevel = imgUploadScale.querySelector('.scale__level');
+// функция, которая сбрасывает значение пина
+var startValuePin = function () {
+  scaleLevel.style.width = '100%';
+  scalePin.style.left = '100%';
+};
+// функция, которая задает текущее значение пина
+var getScaleValue = function () {
+  var coordsScaleLine = scaleLine.getBoundingClientRect();
+  var coordsScalePin = scalePin.getBoundingClientRect();
+
+  var startScaleLine = coordsScaleLine.left;
+  var endScaleLine = coordsScaleLine.right;
+  var scaleLineWidth = endScaleLine - startScaleLine;
+
+  var startScalePin = coordsScalePin.left;
+  var endScalePin = coordsScalePin.right;
+  var scalePinHalfWidth = (endScalePin - startScalePin) / 2;
+  var pinPositionOnLine = (startScalePin + scalePinHalfWidth) - startScaleLine;
+
+  var currentValueScale = pinPositionOnLine / scaleLineWidth;
+  scaleValue.value = currentValueScale;
+  return currentValueScale;
+};
+
+// 1.3, 1.4 Загрузка изображения и показ формы редактирования //
+
 var uploadFile = imgUpload.querySelector('.img-upload__input');
 var imgUploadOverlay = imgUpload.querySelector('.img-upload__overlay');
 var imgUploadCancel = imgUpload.querySelector('.img-upload__cancel');
@@ -171,6 +351,8 @@ var onPopupEscPress = function (evt) {
 // функция, для обработки события открытия + добавление обработки по клавиши esc
 var onPopupOpen = function () {
   imgUploadOverlay.classList.remove('hidden');
+  onValueChange();
+  onEffectsSet();
   document.addEventListener('keydown', onPopupEscPress);
 };
 // функция, для обработки события закрытия + удаление обработки по клавиши esc
@@ -193,30 +375,3 @@ imgUploadCancel.addEventListener('keydown', function (evt) {
     onPopupClose();
   }
 });
-/*
-// Редактирование размера изображения
-var resizeControlMinus = imgUpload.querySelector('.resize__control--minus');
-var resizeControlPlus = imgUpload.querySelector('.resize__control--plus');
-var resizeControlValue = imgUpload.querySelector('.resize__control--value');
-
-var maxSizeValue = 100;
-var minSizeValue = 25;
-var resizeStep = 25;
-
-var resizeControl = function () {
-  if (onResizeControlMinusClick) {
-  for (var i = maxSizeValue; i > minSizeValue; i -= resizeStep) {
-
-   }
-  } else if (onResizeControlPlusClick) {
-
-  }
-};
-
-// обработчик события - изменение размера фотографии минус
-var onResizeControlMinusClick = resizeControlMinus.addEventListener('click', function () {
-});
-// обработчик события - изменение размера фотографии плюс
-var onResizeControlPlusClick = resizeControlPlus.addEventListener('click', function () {
-});
-*/
