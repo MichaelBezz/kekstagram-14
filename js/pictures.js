@@ -97,6 +97,12 @@ var renderPhotocard = function (item) {
     mainPhotocard.classList.remove('hidden');
   });
 
+  photocardElement.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      onPopupClose();
+    }
+  });
+
   return photocardElement;
 };
 
@@ -179,6 +185,7 @@ var PERCENT = '%';
 var onValueChange = function () {
   resizeControlValue.value = MAX_SIZE_VALUE + PERCENT;
   var currentValue = MAX_SIZE_VALUE;
+  resizeControlPlus.disabled = true;
 
   resizeControlPlus.addEventListener('click', function () {
     currentValue += RESIZE_STEP;
@@ -342,7 +349,6 @@ var imgUploadCancel = imgUpload.querySelector('.img-upload__cancel');
 var bigPicturesCancel = mainPhotocard.querySelector('.big-picture__cancel');
 
 var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
 
 // функция, для обработки события закрытия по esc
 var onPopupEscPress = function (evt) {
@@ -359,10 +365,10 @@ var onPopupOpen = function () {
 };
 // функция, для обработки события закрытия + удаление обработки по клавиши esc
 var onPopupClose = function () {
+  mainPhotocard.classList.add('hidden');
   imgUploadOverlay.classList.add('hidden');
   uploadFile.value = '';
   document.removeEventListener('keydown', onPopupEscPress);
-  mainPhotocard.classList.add('hidden');
 };
 // обработчик события - открываем форму редактирования изображения
 uploadFile.addEventListener('change', function () {
@@ -371,12 +377,6 @@ uploadFile.addEventListener('change', function () {
 // обработчик события - закрываем форму редактирования изображения по клику
 imgUploadCancel.addEventListener('click', function () {
   onPopupClose();
-});
-// обработчик события - закрываем форму редактирования изображения по нажатию на enter
-imgUploadCancel.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    onPopupClose();
-  }
 });
 // обработчик события - закрываем форму оверлея по клику
 bigPicturesCancel.addEventListener('click', function () {
