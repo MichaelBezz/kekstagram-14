@@ -92,6 +92,11 @@ var renderPhotocard = function (item) {
   photocardElement.querySelector('.picture__stat--likes').textContent = item.likes;
   photocardElement.querySelector('.picture__stat--comments').textContent = item.comments.length;
 
+  photocardElement.addEventListener('click', function () {
+    renderMainPhotocard(item);
+    mainPhotocard.classList.remove('hidden');
+  });
+
   return photocardElement;
 };
 
@@ -108,14 +113,13 @@ createListElement();
 
 // открываем показ фотографии в полноэкранном режиме
 var mainPhotocard = document.querySelector('.big-picture');
-// mainPhotocard.classList.remove('hidden');
 
 // функция, которая создает сложную разметку для комментариев
-var createPhotocardComments = function (container) {
+var createPhotocardComments = function (container, item) {
   var conteinerComment = document.querySelector('.social__comments');
   removeElements(conteinerComment, '.social__comment');
 
-  for (var i = 0; i < newPhotocardAll[0].comments.length; i++) {
+  for (var i = 0; i < item.comments.length; i++) {
     var imgSrc = 'img/avatar-' + getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg';
 
     var comment = document.createElement('li');
@@ -130,7 +134,7 @@ var createPhotocardComments = function (container) {
 
     var commentText = document.createElement('p');
     commentText.classList.add('social__text');
-    commentText.textContent = newPhotocardAll[0].comments[i];
+    commentText.textContent = item.comments[i];
 
     comment.appendChild(commentImg);
     comment.appendChild(commentText);
@@ -138,25 +142,22 @@ var createPhotocardComments = function (container) {
   }
 };
 // функция, которая создает большую фотографию не из шаблона
-var renderMainPhotocard = function () {
-  var mainPhotocardItem = newPhotocardAll[0];
+var renderMainPhotocard = function (item) {
 
-  mainPhotocard.querySelector('.big-picture__img img').src = mainPhotocardItem.url;
-  mainPhotocard.querySelector('.likes-count').textContent = mainPhotocardItem.likes;
-  mainPhotocard.querySelector('.comments-count').textContent = mainPhotocardItem.comments.length;
-  createPhotocardComments(mainPhotocard.querySelector('.social__comments'));
-  mainPhotocard.querySelector('.social__caption').textContent = mainPhotocardItem.description;
+  mainPhotocard.querySelector('.big-picture__img img').src = item.url;
+  mainPhotocard.querySelector('.likes-count').textContent = item.likes;
+  mainPhotocard.querySelector('.comments-count').textContent = item.comments.length;
+  createPhotocardComments(mainPhotocard.querySelector('.social__comments'), item);
+  mainPhotocard.querySelector('.social__caption').textContent = item.description;
 
 };
 
-// renderMainPhotocard();
-
-// прячем блок счетчика комментариев
-var commentCounter = document.querySelector('.social__comment-count');
-commentCounter.classList.add('visually-hidden');
-// прячем загрузку новых комментариев
-var downloadComments = document.querySelector('.social__loadmore');
-downloadComments.classList.add('visually-hidden');
+// // прячем блок счетчика комментариев
+// var commentCounter = document.querySelector('.social__comment-count');
+// commentCounter.classList.add('visually-hidden');
+// // прячем загрузку новых комментариев
+// var downloadComments = document.querySelector('.social__loadmore');
+// downloadComments.classList.add('visually-hidden');
 
 
 // #15 Личный проект: подробности
@@ -338,6 +339,7 @@ var getScaleValue = function () {
 var uploadFile = imgUpload.querySelector('.img-upload__input');
 var imgUploadOverlay = imgUpload.querySelector('.img-upload__overlay');
 var imgUploadCancel = imgUpload.querySelector('.img-upload__cancel');
+var bigPicturesCancel = mainPhotocard.querySelector('.big-picture__cancel');
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -360,6 +362,7 @@ var onPopupClose = function () {
   imgUploadOverlay.classList.add('hidden');
   uploadFile.value = '';
   document.removeEventListener('keydown', onPopupEscPress);
+  mainPhotocard.classList.add('hidden');
 };
 // обработчик события - открываем форму редактирования изображения
 uploadFile.addEventListener('change', function () {
@@ -374,4 +377,8 @@ imgUploadCancel.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     onPopupClose();
   }
+});
+// обработчик события - закрываем форму оверлея по клику
+bigPicturesCancel.addEventListener('click', function () {
+  onPopupClose();
 });
