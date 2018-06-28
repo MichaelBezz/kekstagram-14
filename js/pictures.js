@@ -390,13 +390,20 @@ var textHashtags = imgUploadText.querySelector('.text__hashtags');
 var textDescription = imgUploadText.querySelector('.text__description');
 
 var MAX_SIMBOL_HASHTAG = 20;
-var MAX_QUATITY_HASHTAGS = 5;
+var MAX_QUATINTY_HASHTAGS = 5;
 var MAX_SIMBOL_TEXT_DESCRIPTION = 140;
 
 var onFormHashtagsValidity = function () {
-  var hashtegsValue = textHashtags.value;
-  hashtegsValue = hashtegsValue.toLowerCase();
-  var arrHashtags = hashtegsValue.split(' ');
+  var hashtagsValue = textHashtags.value;
+  hashtagsValue = hashtagsValue.toLowerCase();
+  var arrHashtags = hashtagsValue.split(' ');
+
+  if (arrHashtags.length > MAX_QUATINTY_HASHTAGS) {
+    textHashtags.setCustomValidity('Максимальное количество хэш-тегов 5');
+    return;
+  } else {
+    textHashtags.setCustomValidity('');
+  }
 
   for (var i = 0; i < arrHashtags.length; i++) {
     if (arrHashtags[i] === '#') {
@@ -404,21 +411,19 @@ var onFormHashtagsValidity = function () {
     } else if (arrHashtags[i][0] !== '#') {
       textHashtags.setCustomValidity('Хэш-тег должен начинаться с #');
     } else if (arrHashtags[i].length > MAX_SIMBOL_HASHTAG) {
-      textHashtags.setCustomValidity('Длинна одного хэш-тега не может превышать 20 символов');
-    } else if (arrHashtags.length > MAX_QUATITY_HASHTAGS) {
-      textHashtags.setCustomValidity('Максимальное количество хэш-тегов 5');
+      textHashtags.setCustomValidity('Длина одного хэш-тега не может превышать 20 символов');
     } else {
       textHashtags.setCustomValidity('');
     }
   }
 
-  var newArrHashtags = [];
-  for (var j = 0; j < arrHashtags.length; j++) {
-    if (arrHashtags.indexOf(arrHashtags[j]) === j) {
-      newArrHashtags.push(arrHashtags[j]);
-    }
-  }
-  hashtegsValue = newArrHashtags;
+  // var newArrHashtags = [];
+  // for (var j = 0; j < arrHashtags.length; j++) {
+  //   if (arrHashtags.indexOf(arrHashtags[j]) === j) {
+  //     newArrHashtags.push(arrHashtags[j]);
+  //   }
+  // }
+  // hashtagsValue = newArrHashtags;
 
 };
 
@@ -429,7 +434,7 @@ textHashtags.addEventListener('blur', function () {
 var onFormTextDescriptionValidity = function (evtText) {
   var target = evtText.target;
   if (target.value.length > MAX_SIMBOL_TEXT_DESCRIPTION) {
-    textDescription.setCustomValidity('Длинна комментария не может превышать 140 символов');
+    textDescription.setCustomValidity('Длина комментария не может превышать 140 символов');
   } else {
     textDescription.setCustomValidity('');
   }
