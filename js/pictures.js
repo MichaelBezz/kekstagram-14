@@ -219,7 +219,12 @@ var FILTER_CLASS_PREFIX = 'effects__preview--';
 var FILTERS = [
   {
     id: 'none',
-    effect: null
+    effect: {
+      name: '',
+      min: '',
+      max: '',
+      unit: ''
+    }
   },
   {
     id: 'chrome',
@@ -279,10 +284,45 @@ var onEffectsSet = function () {
     addEffectListener(i);
   }
 
-  scalePin.addEventListener('mouseup', function () {
-    onCurrentScaleValueMouseup();
-  });
+  changeDepthEffect();
 };
+
+var changeDepthEffect = function () {
+
+  scalePin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var startCoordX = evt.clientX;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var MIN_SHIFT = 0;
+      var MAX_SHIFT = 453;
+
+      var shift = startCoordX - moveEvt.clientX;
+
+      startCoordX = moveEvt.clientX;
+
+      var currentCoord = scalePin.offsetLeft - shift;
+      if (currentCoord <= MAX_SHIFT && currentCoord >= MIN_SHIFT) {
+        scalePin.style.left = currentCoord + 'px';
+        scaleLevel.style.width = currentCoord + 'px';
+      }
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      onCurrentScaleValueMouseup();
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
+};
+
 // функция, которая задает значение пина
 var onCurrentScaleValueMouseup = function () {
   var valueOfEffect = getScaleValue() * (currentEffect.effect.max - currentEffect.effect.min) + currentEffect.effect.min + currentEffect.effect.unit;
@@ -310,6 +350,7 @@ var onResetEffectClick = function () {
     }
   }
   imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
+  startValuePin();
 };
 
 var imgUploadScale = imgUpload.querySelector('.img-upload__scale');
