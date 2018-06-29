@@ -291,9 +291,7 @@ var changeDepthEffect = function () {
 
   scalePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    var startCoord = {
-      x: evt.clientX
-    };
+    var startCoordX = evt.clientX;
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -301,15 +299,11 @@ var changeDepthEffect = function () {
       var MIN_SHIFT = 0;
       var MAX_SHIFT = 453;
 
-      var shift = {
-        x: startCoord.x - moveEvt.clientX
-      };
+      var shift = startCoordX - moveEvt.clientX;
 
-      startCoord = {
-        x: moveEvt.clientX
-      };
+      startCoordX = moveEvt.clientX;
 
-      var currentCoord = scalePin.offsetLeft - shift.x;
+      var currentCoord = scalePin.offsetLeft - shift;
       if (currentCoord <= MAX_SHIFT && currentCoord >= MIN_SHIFT) {
         scalePin.style.left = currentCoord + 'px';
         scaleLevel.style.width = currentCoord + 'px';
@@ -319,7 +313,7 @@ var changeDepthEffect = function () {
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mouseup', onMouseUp);
       onCurrentScaleValueMouseup();
     };
 
