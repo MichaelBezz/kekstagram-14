@@ -16,7 +16,7 @@
 
     photocardElement.addEventListener('click', function () {
       window.preview.renderMainPhotocard(item);
-      window.preview.mainPhotocard.classList.remove('hidden');
+      onOverlayOpen();
     });
 
     return photocardElement;
@@ -33,5 +33,32 @@
   };
 
   createPhotoList();
+
+
+  var bigPicturesCancel = window.preview.mainPhotocard.querySelector('.big-picture__cancel');
+  // функция, для обработки события открытия + добавление обработки по клавиши esc
+  var onOverlayOpen = function () {
+    window.preview.mainPhotocard.classList.remove('hidden');
+    document.addEventListener('keydown', onOverlayEscPress);
+  };
+  // функция, для обработки события закрытия + удаление обработки по клавиши esc
+  var onOverlayClose = function () {
+    window.preview.mainPhotocard.classList.add('hidden');
+    document.removeEventListener('keydown', onOverlayEscPress);
+  };
+  // функция, для обработки события закрытия по esc
+  var onOverlayEscPress = function (evt) {
+    if (evt.keyCode === window.form.ESC_KEYCODE) {
+      onOverlayClose();
+    }
+  };
+  // обработчик события - закрываем форму оверлея по нажатию на esc
+  document.addEventListener('keydown', function () {
+    onOverlayClose();
+  });
+  // обработчик события - закрываем форму оверлея по клику
+  bigPicturesCancel.addEventListener('click', function () {
+    onOverlayClose();
+  });
 
 })();
