@@ -17,7 +17,6 @@
     photocardElement.addEventListener('click', function () {
       window.preview.renderMainPhotocard(item);
       window.preview.mainPhotocard.classList.remove('hidden');
-      onOverleyClose();
     });
 
     return photocardElement;
@@ -34,21 +33,5 @@
   };
 
   createPhotoList();
-
-  var bigPicturesCancel = window.preview.mainPhotocard.querySelector('.big-picture__cancel');
-  // обработчик события - закрываем форму оверлея по нажатию на esc и удаляем обработчик
-  var onOverleyClose = function () {
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.form.ESC_KEYCODE) {
-        window.preview.mainPhotocard.classList.add('hidden');
-      }
-    });
-    document.removeEventListener('keydown', onOverleyClose);
-  };
-  // обработчик события - закрываем форму оверлея по клику
-  bigPicturesCancel.addEventListener('click', function () {
-    window.preview.mainPhotocard.classList.add('hidden');
-    document.removeEventListener('keydown', onOverleyClose);
-  });
 
 })();

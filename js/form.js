@@ -8,12 +8,14 @@
   var uploadFile = imgUpload.querySelector('.img-upload__input');
   var imgUploadOverlay = imgUpload.querySelector('.img-upload__overlay');
   var imgUploadCancel = imgUpload.querySelector('.img-upload__cancel');
+  var bigPicturesCancel = window.preview.mainPhotocard.querySelector('.big-picture__cancel');
 
   var ESC_KEYCODE = 27;
 
   // функция, для обработки события открытия + добавление обработки по клавиши esc
   var onPopupOpen = function () {
     imgUploadOverlay.classList.remove('hidden');
+    window.preview.mainPhotocard.classList.remove('hidden');
     window.onImageScaleSet();
     window.onImageEffectSet();
     document.addEventListener('keydown', onPopupEscPress);
@@ -21,6 +23,7 @@
   // функция, для обработки события закрытия + удаление обработки по клавиши esc
   var onPopupClose = function () {
     imgUploadOverlay.classList.add('hidden');
+    window.preview.mainPhotocard.classList.add('hidden');
     uploadFile.value = '';
     document.removeEventListener('keydown', onPopupEscPress);
   };
@@ -36,6 +39,14 @@
   });
   // обработчик события - закрываем форму редактирования изображения по клику
   imgUploadCancel.addEventListener('click', function () {
+    onPopupClose();
+  });
+  // обработчик события - закрываем форму оверлея по нажатию на esc
+  document.addEventListener('keydown', function () {
+    onPopupClose();
+  });
+  // обработчик события - закрываем форму оверлея по клику
+  bigPicturesCancel.addEventListener('click', function () {
     onPopupClose();
   });
 
