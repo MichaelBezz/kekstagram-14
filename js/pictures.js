@@ -15,14 +15,9 @@
     photocardElement.querySelector('.picture__stat--comments').textContent = item.comments.length;
 
     photocardElement.addEventListener('click', function () {
-      window.preview.renderMainPhotocard(item); // из файла превью
-      window.preview.mainPhotocard.classList.remove('hidden'); // из файла превью
-    });
-
-    photocardElement.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.form.ESC_KEYCODE) {
-        window.preview.mainPhotocard.classList.add('hidden'); // из файла превью
-      }
+      window.preview.renderMainPhotocard(item);
+      window.preview.mainPhotocard.classList.remove('hidden');
+      onOverleyClose();
     });
 
     return photocardElement;
@@ -30,13 +25,30 @@
 
   var fragment = document.createDocumentFragment();
 
-  var createListElement = function () {
-    for (var i = 0; i < window.data.PHOTOCARD_QUANTITY; i++) { // из файла дата
-      fragment.appendChild(renderPhotocard(window.data.createPhotocards()[i])); // из файла дата
+  var createPhotoList = function () {
+    var photocards = window.data.createPhotocards();
+    for (var i = 0; i < photocards.length; i++) {
+      fragment.appendChild(renderPhotocard(photocards[i]));
     }
     photocardListElement.appendChild(fragment);
   };
 
-  createListElement();
+  createPhotoList();
+
+  var bigPicturesCancel = window.preview.mainPhotocard.querySelector('.big-picture__cancel');
+  // обработчик события - закрываем форму оверлея по нажатию на esc и удаляем обработчик
+  var onOverleyClose = function () {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.form.ESC_KEYCODE) {
+        window.preview.mainPhotocard.classList.add('hidden');
+      }
+    });
+    document.removeEventListener('keydown', onOverleyClose);
+  };
+  // обработчик события - закрываем форму оверлея по клику
+  bigPicturesCancel.addEventListener('click', function () {
+    window.preview.mainPhotocard.classList.add('hidden');
+    document.removeEventListener('keydown', onOverleyClose);
+  });
 
 })();

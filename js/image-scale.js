@@ -1,5 +1,5 @@
 'use strict';
-// Масштаб: редактирование размера изображения //
+// масштаб: редактирование размера изображения //
 (function () {
 
   var resizeControlMinus = window.form.imgUpload.querySelector('.resize__control--minus');

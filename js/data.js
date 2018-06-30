@@ -73,7 +73,6 @@
   };
 
   window.data = {
-    PHOTOCARD_QUANTITY: 25,
     getRandomNumber: getRandomNumber,
     createPhotocards: createPhotocards
   };

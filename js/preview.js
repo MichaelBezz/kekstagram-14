@@ -22,7 +22,7 @@
     removeElements(conteinerComment, '.social__comment');
 
     for (var i = 0; i < item.comments.length; i++) {
-      var imgSrc = 'img/avatar-' + window.data.getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg'; // из файла дата
+      var imgSrc = 'img/avatar-' + window.data.getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg';
 
       var comment = document.createElement('li');
       comment.classList.add('social__comment', 'social__comment--text');
@@ -53,12 +53,6 @@
     mainPhotocard.querySelector('.social__caption').textContent = item.description;
 
   };
-
-  var bigPicturesCancel = mainPhotocard.querySelector('.big-picture__cancel');
-  // обработчик события - закрываем форму оверлея по клику
-  bigPicturesCancel.addEventListener('click', function () {
-    mainPhotocard.classList.add('hidden');
-  });
 
   window.preview = {
     renderMainPhotocard: renderMainPhotocard,

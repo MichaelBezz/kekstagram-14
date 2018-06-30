@@ -2,7 +2,7 @@
 // модуль, который работает с формой редактирования изображения //
 (function () {
 
-  // Загрузка изображения и показ формы редактирования //
+  // Загрузка изображения и показ формы редактирования
   var imgUpload = document.querySelector('.img-upload');
   var imgUploadPreview = imgUpload.querySelector('.img-upload__preview');
   var uploadFile = imgUpload.querySelector('.img-upload__input');
@@ -11,12 +11,6 @@
 
   var ESC_KEYCODE = 27;
 
-  // функция, для обработки события закрытия по esc
-  var onPopupEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      onPopupClose();
-    }
-  };
   // функция, для обработки события открытия + добавление обработки по клавиши esc
   var onPopupOpen = function () {
     imgUploadOverlay.classList.remove('hidden');
@@ -29,6 +23,12 @@
     imgUploadOverlay.classList.add('hidden');
     uploadFile.value = '';
     document.removeEventListener('keydown', onPopupEscPress);
+  };
+  // функция, для обработки события закрытия по esc
+  var onPopupEscPress = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      onPopupClose();
+    }
   };
   // обработчик события - открываем форму редактирования изображения
   uploadFile.addEventListener('change', function () {

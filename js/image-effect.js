@@ -1,5 +1,5 @@
 'use strict';
-// Наложение эффекта на изображение //
+// наложение эффекта на изображение //
 (function () {
 
   var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
@@ -92,11 +92,11 @@
         var shift = startCoordX - moveEvt.clientX;
         startCoordX = moveEvt.clientX;
 
-        var MIN_SHIFT = window.scaleLineWidth - window.scaleLineWidth;
+        var MIN_SHIFT = 0;
         var MAX_SHIFT = window.scaleLineWidth;
 
         var currentCoord = scalePin.offsetLeft - shift;
-        if (currentCoord <= MAX_SHIFT && currentCoord >= MIN_SHIFT) {
+        if (currentCoord <= MAX_SHIFT && currentCoord > MIN_SHIFT) {
           scalePin.style.left = currentCoord + 'px';
           scaleLevel.style.width = currentCoord + 'px';
         }
@@ -116,32 +116,30 @@
   };
   // функция, которая устанавливает глубину эффекта
   var currentScaleValueMouseup = function () {
-    var valueOfEffect = getScaleValue() * (currentEffect.effect.max - currentEffect.effect.min) + currentEffect.effect.min + currentEffect.effect.unit;
-    window.form.imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffect + ')';
+    var differenceEffectValue = currentEffect.effect.max - currentEffect.effect.min;
+    var valueOfEffect = getScaleValue() * differenceEffectValue + currentEffect.effect.min;
+    var valueOfEffectUnit = valueOfEffect + currentEffect.effect.unit;
+    window.form.imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffectUnit + ')';
   };
   // функция, которая выбирает фильтр и обновляет значение переменной текущего фильтра
   var addEffectListener = function (i) {
     var effectId = FILTER_SELECTOR_PREFIX + FILTERS[i].id;
     var effectElement = imgUploadEffects.querySelector('#' + effectId);
     effectElement.addEventListener('click', function () {
-      currentEffect = FILTERS[i];
       resetEffectClick();
+      startValuePin();
+      currentEffect = FILTERS[i];
       if (FILTERS[i].id === 'none') {
         imgUploadScale.classList.add('hidden');
       }
+      window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     });
   };
   // функция, которая удаляет классы стилей у элементов и назначает их
   var resetEffectClick = function () {
-    for (var i = 0; i < FILTERS.length; i++) {
-      window.form.imgUploadPreview.classList.remove(FILTER_CLASS_PREFIX + FILTERS[i].id);
-      window.form.imgUploadPreview.style.filter = null;
-      if (FILTERS[i].id === 'none') {
-        imgUploadScale.classList.remove('hidden');
-      }
-    }
-    window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
-    startValuePin();
+    window.form.imgUploadPreview.classList.remove(FILTER_CLASS_PREFIX + currentEffect.id);
+    window.form.imgUploadPreview.style.filter = null;
+    imgUploadScale.classList.remove('hidden');
   };
   // функция, которая сбрасывает значение пина
   var startValuePin = function () {
