@@ -1278,3 +1278,13 @@ main {
     grid-row: 1 / span 3;
   }
 }
+
+.error-message {
+  position: absolute;
+  z-index: 100;
+  width: auto;
+  margin: 0 auto;
+  font-size: 120px;
+  text-align: center;
+  background-color: red;
+}
