@@ -44,7 +44,7 @@
 
   // обработчик события - закрываем форму и отправляем данные на сервер
   imgUploadForm.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(imgUploadForm), onUploadFormClose, window.errorHandler);
+    window.backend.upload(new FormData(imgUploadForm), onUploadFormClose, window.errorMessage.uploadMessageError);
     evt.preventDefault();
   });
 

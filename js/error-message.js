@@ -2,29 +2,39 @@
 // служебные сообщения //
 (function () {
 
-  window.errorHandler = function (message) {
+  var errorHandler = function (message) {
     var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; padding: 15px 30px; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '20px';
+    node.classList.add('messege-error');
     node.textContent = message;
 
     var closeNode = document.createElement('button');
+    closeNode.classList.add('messege-error-close');
     closeNode.textContent = 'Попробовать еще раз';
-    closeNode.style = 'z-index: 101; padding: 0px 5px; text-align: center; background-color: green;';
-    closeNode.style.position = 'absolute';
-    closeNode.style.left = '90%';
-    closeNode.style.fontSize = '10px';
-    closeNode.style.borderRadius = '10px';
+
     closeNode.addEventListener('click', function () {
       window.location.reload();
-      document.body.removeChild(node);
     });
 
     node.appendChild(closeNode);
     document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  var imgUploadMessageError = document.querySelector('#picture')
+    .content
+    .querySelector('.img-upload__message--error');
+
+  var uploadMessageError = function (message) {
+    var messageError = imgUploadMessageError.cloneNode(true);
+
+    messageError.classList.remove('hidden');
+    messageError.querySelector('.error__links').textContent = message;
+
+    document.body.appendChild(messageError);
+  };
+
+  window.errorMessage = {
+    errorHandler: errorHandler,
+    uploadMessageError: uploadMessageError
   };
 
 })();

@@ -70,7 +70,7 @@
   ];
   // задаем фильтр по умолчанию
   var currentEffect = FILTERS[5];
-  // функция, которая: задает фильтр по умолчанию, перебирает массив и вешает обработчик на пин
+  // функция, которая задает фильтр и значение пина по умолчанию, перебирает массив
   window.onImageEffectSet = function () {
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
@@ -118,7 +118,7 @@
   var currentScaleValueMouseup = function () {
     var differenceEffectValue = currentEffect.effect.max - currentEffect.effect.min;
     var valueOfEffect = getScaleValue() * differenceEffectValue + currentEffect.effect.min;
-    var valueOfEffectUnit = Math.floor(valueOfEffect) + currentEffect.effect.unit;
+    var valueOfEffectUnit = valueOfEffect + currentEffect.effect.unit;
     window.form.imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffectUnit + ')';
   };
   // функция, которая выбирает фильтр и обновляет значение переменной текущего фильтра
