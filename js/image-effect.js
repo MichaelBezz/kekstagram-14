@@ -70,7 +70,7 @@
   ];
   // задаем фильтр по умолчанию
   var currentEffect = FILTERS[5];
-  // функция, которая: задает фильтр по умолчанию, перебирает массив и вешает обработчик на пин
+  // функция, которая задает фильтр и значение пина по умолчанию, перебирает массив
   window.onImageEffectSet = function () {
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
@@ -161,7 +161,7 @@
     var pinPositionOnLine = (startScalePin + scalePinHalfWidth) - startScaleLine;
 
     var currentValueScale = pinPositionOnLine / window.scaleLineWidth;
-    scaleValue.value = currentValueScale * 100;
+    scaleValue.value = Math.floor(currentValueScale * 100);
     return currentValueScale;
   };
 

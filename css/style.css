@@ -1278,3 +1278,33 @@ main {
     grid-row: 1 / span 3;
   }
 }
+
+.messege-error {
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 15px 30px;
+  font-size: 20px;
+  text-align: center;
+  background-color: red;
+}
+
+.messege-error-close {
+  position: absolute;
+  z-index: 101;
+  left: 90%;
+  margin: 0 auto;
+  padding: 0px 5px;
+  font-size: 10px;
+  text-align: center;
+  background-color: green;
+  border-radius: 10px;
+}
+
+.messege-error-border {
+  border: 5px solid red;
+  border-radius: 10px;
+}
+
