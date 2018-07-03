@@ -36,6 +36,6 @@
     usersPhoto = photo;
     createPhotoList(usersPhoto);
   };
-  window.backend.download(getUsersPhotoFromServer, window.errorMessage);
+  window.backend.download(getUsersPhotoFromServer, window.errorHandler);
 
 })();

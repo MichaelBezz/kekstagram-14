@@ -23,6 +23,8 @@
   var onUploadFormClose = function () {
     imgUploadOverlay.classList.add('hidden');
     uploadFile.value = '';
+    window.validation.textHashtags.value = '';
+    window.validation.textDescription.value = '';
     document.removeEventListener('keydown', onUploadFormEscPress);
   };
   // функция, для обработки события закрытия по esc
@@ -42,7 +44,7 @@
 
   // обработчик события - закрываем форму и отправляем данные на сервер
   imgUploadForm.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(imgUploadForm), onUploadFormClose, window.errorMessage);
+    window.backend.upload(new FormData(imgUploadForm), onUploadFormClose, window.errorHandler);
     evt.preventDefault();
   });
 

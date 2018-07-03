@@ -15,6 +15,10 @@
     hashtagsValue = hashtagsValue.toLowerCase();
     var arrHashtags = hashtagsValue.split(' ');
 
+    if (hashtagsValue === '') {
+      textHashtags.setCustomValidity('');
+    }
+
     if (arrHashtags.length > MAX_QUATINTY_HASHTAGS) {
       textHashtags.setCustomValidity('Максимальное количество хэш-тегов 5');
       return;
@@ -34,13 +38,13 @@
       }
     }
 
-    // var newArrHashtags = [];
-    // for (var j = 0; j < arrHashtags.length; j++) {
-    //   if (arrHashtags.indexOf(arrHashtags[j]) === j) {
-    //     newArrHashtags.push(arrHashtags[j]);
-    //   }
-    // }
-    // hashtagsValue = newArrHashtags;
+    var newArrHashtags = [];
+    for (var j = 0; j < arrHashtags.length; j++) {
+      if (arrHashtags.indexOf(arrHashtags[j]) === j) {
+        newArrHashtags.push(arrHashtags[j]);
+      }
+    }
+    textHashtags.value = newArrHashtags.join(' ');
 
   };
   // обработчик события - запускает валидацию формы хэш-тегов
@@ -72,5 +76,10 @@
       evt.stopPropagation();
     }
   });
+
+  window.validation = {
+    textHashtags: textHashtags,
+    textDescription: textDescription
+  };
 
 })();

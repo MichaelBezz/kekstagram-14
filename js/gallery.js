@@ -7,6 +7,7 @@
   // функция, для обработки события открытия + добавление обработки по клавиши esc
   var onOverlayOpen = function () {
     mainPhotocard.classList.remove('hidden');
+    socialCommentsCounter();
     // hiddenSocialCommentsLoadmore();
     // hiddenSocialComments();
     document.addEventListener('keydown', onOverlayEscPress);
@@ -32,10 +33,10 @@
     onOverlayClose();
   });
 
-  /*
+
   var commentShow = mainPhotocard.querySelector('.comments-show');
-  var socialLoadmore = mainPhotocard.querySelector('.social__loadmore');
-  var MAX_SOCIAL_COMMENTS = 5;
+  // var socialLoadmore = mainPhotocard.querySelector('.social__loadmore');
+  // var MAX_SOCIAL_COMMENTS = 5;
   // функция, которая определяет сколько всего комментариев показанно в данный момент
   var socialCommentsCounter = function () {
     var socialComment = mainPhotocard.querySelectorAll('.social__comment');
@@ -45,6 +46,7 @@
     }
     commentShow.textContent = valueCommentsCounter;
   };
+  /*
   // функция, которая скрывает загрузку дополнительных комментариев
   var hiddenSocialCommentsLoadmore = function () {
     var socialComment = mainPhotocard.querySelectorAll('.social__comment');

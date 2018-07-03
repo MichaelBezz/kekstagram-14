@@ -118,7 +118,7 @@
   var currentScaleValueMouseup = function () {
     var differenceEffectValue = currentEffect.effect.max - currentEffect.effect.min;
     var valueOfEffect = getScaleValue() * differenceEffectValue + currentEffect.effect.min;
-    var valueOfEffectUnit = valueOfEffect + currentEffect.effect.unit;
+    var valueOfEffectUnit = Math.floor(valueOfEffect) + currentEffect.effect.unit;
     window.form.imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffectUnit + ')';
   };
   // функция, которая выбирает фильтр и обновляет значение переменной текущего фильтра
@@ -161,7 +161,7 @@
     var pinPositionOnLine = (startScalePin + scalePinHalfWidth) - startScaleLine;
 
     var currentValueScale = pinPositionOnLine / window.scaleLineWidth;
-    scaleValue.value = currentValueScale * 100;
+    scaleValue.value = Math.floor(currentValueScale * 100);
     return currentValueScale;
   };
 
