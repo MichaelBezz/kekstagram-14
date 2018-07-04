@@ -47,29 +47,29 @@
   var filterDiscussed = imgFiltersForm.querySelector('#filter-discussed');
   // функция, которая отвечает за фильтр популярные (фотографии в изначальном порядке)
   var onFilterPopularClick = function () {
-    changeActivButton(filterPopular, filterNew, filterDiscussed);
+    changeActiveButton(filterPopular);
     createPhotoList(userPhotos);
   };
   // обработчик события - фильтр популярные
-  filterPopular.addEventListener('click', onFilterPopularClick);
+  filterPopular.addEventListener('click', window.debounce(onFilterPopularClick));
   // функция, которая отвечает за фильтр новые (10 случайных, не повторяющихся фотографий)
   var onFilterNewClick = function () {
-    changeActivButton(filterNew, filterPopular, filterDiscussed);
+    changeActiveButton(filterNew);
 
-    var TOP_TEN = 10;
+    var RANDOM_TEN_PHOTOS = 10;
     var newArr = userPhotos.slice();
     newArr.sort(function () {
       return Math.random() - 0.5;
     });
-    var newArrTopTen = newArr.slice(0, TOP_TEN);
+    var newArrTopTen = newArr.slice(0, RANDOM_TEN_PHOTOS);
 
     createPhotoList(newArrTopTen);
   };
   // обработчик события - фильтр новые
-  filterNew.addEventListener('click', onFilterNewClick);
+  filterNew.addEventListener('click', window.debounce(onFilterNewClick));
   // функция, которая отвечает за фильтр обсуждаемые (в порядке убывания количества комментариев)
   var onFilterDiscussedClick = function () {
-    changeActivButton(filterDiscussed, filterPopular, filterNew);
+    changeActiveButton(filterDiscussed);
 
     var discussedArr = userPhotos.slice();
     discussedArr.sort(function (left, right) {
@@ -78,12 +78,15 @@
     createPhotoList(discussedArr);
   };
   // обработчик события - фильтр обсуждаемые
-  filterDiscussed.addEventListener('click', onFilterDiscussedClick);
-
-  var changeActivButton = function (activeButton, disableButtonOne, disableButtonTwo) {
+  filterDiscussed.addEventListener('click', window.debounce(onFilterDiscussedClick));
+  // функция, которая изменяет активную кнопку
+  var changeActiveButton = function (activeButton) {
+    var currentActiveButton = imgFiltersForm.querySelector('.img-filters__button--active');
+    if (currentActiveButton === activeButton) {
+      return;
+    }
+    currentActiveButton.classList.remove('img-filters__button--active');
     activeButton.classList.add('img-filters__button--active');
-    disableButtonOne.classList.remove('img-filters__button--active');
-    disableButtonTwo.classList.remove('img-filters__button--active');
   };
 
 })();
