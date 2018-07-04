@@ -9,14 +9,11 @@
   var onOverlayOpen = function () {
     mainPhotocard.classList.remove('hidden');
     socialCommentsCounter();
-    // hiddenSocialCommentsLoadmore();
-    // hiddenSocialComments();
     document.addEventListener('keydown', onOverlayEscPress);
   };
   // функция, для обработки события закрытия + удаление обработки по клавиши esc
   var onOverlayClose = function () {
     mainPhotocard.classList.add('hidden');
-    // socialLoadmore.removeEventListener('click', addSocialCommentsLoadmore);
     document.removeEventListener('keydown', onOverlayEscPress);
   };
   // функция, для обработки события закрытия по esc
