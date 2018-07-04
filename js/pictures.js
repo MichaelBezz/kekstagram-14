@@ -31,11 +31,45 @@
     photocardListElement.appendChild(fragment);
   };
   // загрузка данных с сервера
-  var usersPhoto = [];
-  var getUsersPhotoFromServer = function (photo) {
-    usersPhoto = photo;
-    createPhotoList(usersPhoto);
+  var getUserPhotosFromServer = function (photo) {
+    var userPhotos = [];
+    userPhotos = photo;
+    saveUserPhotos(userPhotos);
+    createPhotoList(userPhotos);
+    imgFiltersForm.classList.remove('img-filters--inactive');
   };
-  window.backend.download(getUsersPhotoFromServer, window.errorMessage.errorHandler);
+  window.backend.download(getUserPhotosFromServer, window.errorMessage.errorHandler);
+
+
+  var imgFiltersForm = document.querySelector('.img-filters');
+  var filterPopular = imgFiltersForm.querySelector('#filter-popular');
+  var filterNew = imgFiltersForm.querySelector('#filter-new');
+  var filterDiscussed = imgFiltersForm.querySelector('#filter-discussed');
+
+  var saveUserPhotos = function (data) {
+    var saveArrPhoto = data.slice();
+    return saveArrPhoto;
+  };
+  // функция, которая отвечает за фильтр популярные (фотографии в изначальном порядке)
+  var onFilterPopularClick = function () {
+    window.preview.removeElements(photocardListElement, '.picture__link');
+  };
+  // обработчик события - фильтр популярные
+  filterPopular.addEventListener('click', onFilterPopularClick);
+  // функция, которая отвечает за фильтр новые (10 случайных, не повторяющихся фотографий)
+  var onFilterNewClick = function () {
+    window.preview.removeElements(photocardListElement, '.picture__link');
+    var TOP_TEN = 10;
+    var data = saveUserPhotos();
+  };
+  console.log(onFilterNewClick());
+  // обработчик события - фильтр новые
+  filterNew.addEventListener('click', onFilterNewClick);
+  // функция, которая отвечает за фильтр обсуждаемые (в порядке убывания количества комментариев)
+  var onFilterDiscussedClick = function () {
+    window.preview.removeElements(photocardListElement, '.picture__link');
+  };
+  // обработчик события - фильтр обсуждаемые
+  filterDiscussed.addEventListener('click', onFilterDiscussedClick);
 
 })();

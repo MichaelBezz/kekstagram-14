@@ -59,7 +59,8 @@
   };
 
   window.preview = {
-    renderMainPhotocard: renderMainPhotocard
+    renderMainPhotocard: renderMainPhotocard,
+    removeElements: removeElements
   };
 
 })();
