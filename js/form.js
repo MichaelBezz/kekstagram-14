@@ -2,6 +2,8 @@
 // модуль, который работает с формой редактирования изображения //
 (function () {
 
+  var ESC_KEYCODE = 27;
+
   // Загрузка изображения и показ формы редактирования
   var imgUpload = document.querySelector('.img-upload');
   var imgUploadPreview = imgUpload.querySelector('.img-upload__preview');
@@ -9,8 +11,6 @@
   var imgUploadOverlay = imgUpload.querySelector('.img-upload__overlay');
   var imgUploadCancel = imgUpload.querySelector('.img-upload__cancel');
   var imgUploadForm = imgUpload.querySelector('.img-upload__form');
-
-  var ESC_KEYCODE = 27;
 
   // функция, для обработки события открытия + добавление обработки по клавиши esc
   var onUploadFormOpen = function () {
@@ -52,6 +52,7 @@
   window.form = {
     imgUpload: imgUpload,
     imgUploadPreview: imgUploadPreview,
+    imgUploadOverlay: imgUploadOverlay,
     ESC_KEYCODE: 27
   };
 

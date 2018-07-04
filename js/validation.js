@@ -2,13 +2,14 @@
 // модуль валидации формы //
 (function () {
 
+  var MAX_SIMBOL_HASHTAG = 20;
+  var MAX_QUATINTY_HASHTAGS = 5;
+  var MAX_SIMBOL_TEXT_DESCRIPTION = 140;
+
   var imgUploadText = document.querySelector('.img-upload__text');
   var textHashtags = imgUploadText.querySelector('.text__hashtags');
   var textDescription = imgUploadText.querySelector('.text__description');
 
-  var MAX_SIMBOL_HASHTAG = 20;
-  var MAX_QUATINTY_HASHTAGS = 5;
-  var MAX_SIMBOL_TEXT_DESCRIPTION = 140;
   // функция, которая отвечает за валидацию формы
   var onFormHashtagsValidity = function () {
     var hashtagsValue = textHashtags.value;

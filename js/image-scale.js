@@ -2,14 +2,14 @@
 // масштаб: редактирование размера изображения //
 (function () {
 
-  var resizeControlMinus = window.form.imgUpload.querySelector('.resize__control--minus');
-  var resizeControlPlus = window.form.imgUpload.querySelector('.resize__control--plus');
-  var resizeControlValue = window.form.imgUpload.querySelector('.resize__control--value');
-
   var MAX_SIZE_VALUE = 100;
   var MIN_SIZE_VALUE = 25;
   var RESIZE_STEP = 25;
   var PERCENT = '%';
+
+  var resizeControlMinus = window.form.imgUpload.querySelector('.resize__control--minus');
+  var resizeControlPlus = window.form.imgUpload.querySelector('.resize__control--plus');
+  var resizeControlValue = window.form.imgUpload.querySelector('.resize__control--value');
 
   // функция, которая изменяет масштаб изображения
   window.onImageScaleSet = function () {

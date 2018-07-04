@@ -2,10 +2,11 @@
 // модуль для отрисовки увеличенного изображения //
 (function () {
 
-  var socialComments = window.gallery.mainPhotocard.querySelector('.social__comments');
-
   var START_EXAMPLE_IMGURL = 1;
   var END_EXAMPLE_IMGURL = 6;
+
+  var socialComments = window.gallery.mainPhotocard.querySelector('.social__comments');
+
   // функция, которая генерирует случайное значение в промежутке от minNumber до maxNumber
   var getRandomNumber = function (minNumber, maxNumber) {
     var numberArr = Math.floor(Math.random() * (maxNumber - minNumber) + minNumber);
