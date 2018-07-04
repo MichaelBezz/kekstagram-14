@@ -25,16 +25,16 @@
   var fragment = document.createDocumentFragment();
 
   var createPhotoList = function (photocards) {
+    window.preview.removeElements(photocardListElement, '.picture__link');
     for (var i = 0; i < photocards.length; i++) {
       fragment.appendChild(renderPhotocard(photocards[i]));
     }
     photocardListElement.appendChild(fragment);
   };
   // загрузка данных с сервера
+  var userPhotos = [];
   var getUserPhotosFromServer = function (photo) {
-    var userPhotos = [];
     userPhotos = photo;
-    saveUserPhotos(userPhotos);
     createPhotoList(userPhotos);
     imgFiltersForm.classList.remove('img-filters--inactive');
   };
@@ -45,31 +45,45 @@
   var filterPopular = imgFiltersForm.querySelector('#filter-popular');
   var filterNew = imgFiltersForm.querySelector('#filter-new');
   var filterDiscussed = imgFiltersForm.querySelector('#filter-discussed');
-
-  var saveUserPhotos = function (data) {
-    var saveArrPhoto = data.slice();
-    return saveArrPhoto;
-  };
   // функция, которая отвечает за фильтр популярные (фотографии в изначальном порядке)
   var onFilterPopularClick = function () {
-    window.preview.removeElements(photocardListElement, '.picture__link');
+    changeActivButton(filterPopular, filterNew, filterDiscussed);
+    createPhotoList(userPhotos);
   };
   // обработчик события - фильтр популярные
   filterPopular.addEventListener('click', onFilterPopularClick);
   // функция, которая отвечает за фильтр новые (10 случайных, не повторяющихся фотографий)
   var onFilterNewClick = function () {
-    window.preview.removeElements(photocardListElement, '.picture__link');
+    changeActivButton(filterNew, filterPopular, filterDiscussed);
+
     var TOP_TEN = 10;
-    var data = saveUserPhotos();
+    var newArr = userPhotos.slice();
+    newArr.sort(function () {
+      return Math.random() - 0.5;
+    });
+    var newArrTopTen = newArr.slice(0, TOP_TEN);
+
+    createPhotoList(newArrTopTen);
   };
-  console.log(onFilterNewClick());
   // обработчик события - фильтр новые
   filterNew.addEventListener('click', onFilterNewClick);
   // функция, которая отвечает за фильтр обсуждаемые (в порядке убывания количества комментариев)
   var onFilterDiscussedClick = function () {
-    window.preview.removeElements(photocardListElement, '.picture__link');
+    changeActivButton(filterDiscussed, filterPopular, filterNew);
+
+    var discussedArr = userPhotos.slice();
+    discussedArr.sort(function (left, right) {
+      return right.comments.length - left.comments.length;
+    });
+    createPhotoList(discussedArr);
   };
   // обработчик события - фильтр обсуждаемые
   filterDiscussed.addEventListener('click', onFilterDiscussedClick);
+
+  var changeActivButton = function (activeButton, disableButtonOne, disableButtonTwo) {
+    activeButton.classList.add('img-filters__button--active');
+    disableButtonOne.classList.remove('img-filters__button--active');
+    disableButtonTwo.classList.remove('img-filters__button--active');
+  };
 
 })();
