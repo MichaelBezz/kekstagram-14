@@ -2,7 +2,7 @@
 // модуль для отрисовки миниатюры //
 (function () {
 
-  var RANDOM_TEN_PHOTOS = 10;
+  var RANDOM_PHOTOS_COUNT = 10;
 
   var imgFiltersForm = document.querySelector('.img-filters');
   var filterPopular = imgFiltersForm.querySelector('#filter-popular');
@@ -62,7 +62,7 @@
       newArr.sort(function () {
         return Math.random() - 0.5;
       });
-      photos = newArr.slice(0, RANDOM_TEN_PHOTOS);
+      photos = newArr.slice(0, RANDOM_PHOTOS_COUNT);
       button = filterNew;
     } else {
       photos = userPhotos.slice();
