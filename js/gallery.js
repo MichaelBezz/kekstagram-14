@@ -2,13 +2,15 @@
 // модуль для отрисовки миниатюры //
 (function () {
 
+  // var MAX_COMMENT_COUNT = 5;
+
   var mainPhotocard = document.querySelector('.big-picture');
   var bigPicturesCancel = mainPhotocard.querySelector('.big-picture__cancel');
-  var commentShow = mainPhotocard.querySelector('.comments-show');
+  // var commentShow = mainPhotocard.querySelector('.comments-show');
+  // var socialLoadmore = mainPhotocard.querySelector('.social__loadmore');
   // функция, для обработки события открытия + добавление обработки по клавиши esc
-  var onOverlayOpen = function () {
+  var onOverlayOpenClick = function () {
     mainPhotocard.classList.remove('hidden');
-    getNumberSocialComments();
     document.addEventListener('keydown', onOverlayEscPress);
   };
   // функция, для обработки события закрытия + удаление обработки по клавиши esc
@@ -23,13 +25,37 @@
     }
   };
   // обработчик события - закрываем форму оверлея по нажатию на esc
-  document.addEventListener('keydown', function () {
-    onOverlayClose();
-  });
+  mainPhotocard.addEventListener('keydown', onOverlayClose);
   // обработчик события - закрываем форму оверлея по клику
-  bigPicturesCancel.addEventListener('click', function () {
-    onOverlayClose();
-  });
+  bigPicturesCancel.addEventListener('click', onOverlayClose);
+
+  /*
+
+  // функция, которая создает массив из комментариев
+  var getArrayComments = function () {
+    var arrayComments = Array.from(mainPhotocard.querySelectorAll('.social__comment'));
+    return arrayComments;
+  };
+
+  var getSocialComments = function () {
+    var socialComments = getArrayComments();
+    if (socialComments.length <= MAX_COMMENT_COUNT) {
+      socialLoadmore.classList.add('hidden');
+    } else {
+      var numberSocialComments = MAX_COMMENT_COUNT;
+
+    }
+  };
+
+  var showSocialComments = function () {
+    var socialComments = getArrayComments();
+
+  };
+
+
+*/
+
+  /*
   // функция, которая создает массив из комментариев
   var getArrayComments = function () {
     var arrayComments = Array.from(mainPhotocard.querySelectorAll('.social__comment'));
@@ -46,10 +72,40 @@
     }
     commentShow.textContent = commentCounter;
   };
+  // функция, которая скрывает лишние комментарии
+  var hideSocialComments = function () {
+    var socialComments = getArrayComments();
+    if (socialComments.length > MAX_COMMENT_COUNT) {
+      for (var i = MAX_COMMENT_COUNT; i < socialComments.length; i++) {
+        socialComments[i].style.display = 'none';
+      }
+    }
+    getNumberSocialComments();
+  };
+  // функция, которая загружает дополнительные комментарии
+  var onSocialCommentsLoadmore = function () {
+    var socialComments = getArrayComments();
+    socialComments.filter(function (comment) {
+      return comment.style.display === 'none';
+    });
 
+    for (var i = 0; i < MAX_COMMENT_COUNT; i++) {
+      socialComments[i].style.display = '';
+    }
+
+    getNumberSocialComments();
+  };
+  // функция, которая скрывает кнопку загрузки дополнительных комментариев
+  var hideSocialCommentsLoadmore = function () {
+    var socialComments = getArrayComments();
+    if (socialComments.length <= MAX_COMMENT_COUNT) {
+      socialLoadmore.classList.add('hidden');
+    }
+  };
+*/
   window.gallery = {
     mainPhotocard: mainPhotocard,
-    onOverlayOpen: onOverlayOpen
+    onOverlayOpenClick: onOverlayOpenClick
   };
 
 })();

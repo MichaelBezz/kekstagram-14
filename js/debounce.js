@@ -10,9 +10,9 @@
     return function () {
       var args = arguments;
       if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
+        clearTimeout(lastTimeout);
       }
-      lastTimeout = window.setTimeout(function () {
+      lastTimeout = setTimeout(function () {
         fun.apply(null, args);
       }, TIMEOUT);
     };

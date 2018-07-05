@@ -9,14 +9,14 @@
 
   // функция, которая генерирует случайное значение в промежутке от minNumber до maxNumber
   var getRandomNumber = function (minNumber, maxNumber) {
-    var numberArr = Math.floor(Math.random() * (maxNumber - minNumber) + minNumber);
-    return numberArr;
+    var randomNumber = Math.floor(Math.random() * (maxNumber - minNumber) + minNumber);
+    return randomNumber;
   };
   // функция, которая удаляет элементы из контейнера
-  var removeElements = function (contain, selector) {
-    var element = contain.querySelectorAll(selector);
+  var removeElements = function (container, selector) {
+    var element = container.querySelectorAll(selector);
     for (var i = 0; i < element.length; i++) {
-      contain.removeChild(element[i]);
+      container.removeChild(element[i]);
     }
   };
 

@@ -11,7 +11,7 @@
   var textDescription = imgUploadText.querySelector('.text__description');
 
   // функция, которая отвечает за валидацию формы
-  var onFormHashtagsValidity = function () {
+  var onFormHashtagsValidityBlur = function () {
     var hashtagsValue = textHashtags.value;
     hashtagsValue = hashtagsValue.toLowerCase();
     var arrHashtags = hashtagsValue.split(' ');
@@ -19,6 +19,7 @@
     if (hashtagsValue === '') {
       textHashtags.setCustomValidity('');
       textHashtags.classList.remove('messege-error-border');
+      return;
     }
 
     if (arrHashtags.length > MAX_QUATINTY_HASHTAGS) {
@@ -55,23 +56,18 @@
     textHashtags.value = newArrHashtags.join(' ');
 
   };
-  // обработчик события - запускает валидацию формы хэш-тегов
-  textHashtags.addEventListener('blur', function () {
-    onFormHashtagsValidity();
-  });
+
   // валидация отправки сообщений
-  var onFormTextDescriptionValidity = function (evtText) {
+  var onFormTextDescriptionValidityBlur = function (evtText) {
     var target = evtText.target;
     if (target.value.length > MAX_SIMBOL_TEXT_DESCRIPTION) {
+      textDescription.classList.add('messege-error-border');
       textDescription.setCustomValidity('Длина комментария не может превышать 140 символов');
     } else {
+      textDescription.classList.remove('messege-error-border');
       textDescription.setCustomValidity('');
     }
   };
-  // обработчик события - запускает валидацию формы сообщений
-  textDescription.addEventListener('change', function (evt) {
-    onFormTextDescriptionValidity(evt);
-  });
   // обработчик события - отмена закрытия формы, если фокус на поле хэш-тегов
   textHashtags.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.form.ESC_KEYCODE) {
@@ -85,9 +81,23 @@
     }
   });
 
+  var onValidationAdd = function () {
+    // обработчик события - запускает валидацию формы хэш-тегов
+    textHashtags.addEventListener('blur', onFormHashtagsValidityBlur);
+    // обработчик события - запускает валидацию формы сообщений
+    textDescription.addEventListener('blur', onFormTextDescriptionValidityBlur);
+  };
+
+  var onValidationRemove = function () {
+    textHashtags.removeEventListener('blur', onFormHashtagsValidityBlur);
+    textDescription.removeEventListener('blur', onFormTextDescriptionValidityBlur);
+  };
+
   window.validation = {
     textHashtags: textHashtags,
-    textDescription: textDescription
+    textDescription: textDescription,
+    onValidationAdd: onValidationAdd,
+    onValidationRemove: onValidationRemove
   };
 
 })();
