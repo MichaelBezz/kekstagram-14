@@ -2,7 +2,7 @@
 // служебные сообщения //
 (function () {
 
-  var errorHandler = function (message) {
+  var uploadDataMessageError = function (message) {
     var node = document.createElement('div');
     node.classList.add('messege-error');
     node.textContent = message;
@@ -28,12 +28,13 @@
 
     messageError.classList.remove('hidden');
     messageError.querySelector('.error__links').textContent = message;
+    window.form.imgUploadOverlay.classList.add('hidden');
 
     document.body.appendChild(messageError);
   };
 
   window.errorMessage = {
-    errorHandler: errorHandler,
+    uploadDataMessageError: uploadDataMessageError,
     uploadMessageError: uploadMessageError
   };
 
