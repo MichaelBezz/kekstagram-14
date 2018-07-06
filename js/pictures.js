@@ -22,7 +22,7 @@
 
     photocardElement.addEventListener('click', function () {
       window.preview.renderMainPhotocard(item);
-      window.gallery.onOverlayOpenClick();
+      window.preview.onOverlayOpenClick();
     });
 
     return photocardElement;
@@ -38,6 +38,7 @@
   };
   // загрузка данных с сервера
   var userPhotos = [];
+
   var getUserPhotosFromServer = function (photo) {
     userPhotos = photo;
     createPhotoList(userPhotos);

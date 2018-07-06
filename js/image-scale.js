@@ -16,6 +16,7 @@
     resizeControlValue.value = MAX_SIZE_VALUE + PERCENT;
     currentValue = MAX_SIZE_VALUE;
     resizeControlPlus.disabled = true;
+    resizeControlMinus.disabled = false;
   };
 
   var onPlusClick = function () {

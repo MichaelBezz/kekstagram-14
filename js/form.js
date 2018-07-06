@@ -35,7 +35,6 @@
     window.imageScale.onScaleListenersRemove();
     window.imageEffect.onEffectListenersRemove();
     window.validation.onValidationRemove();
-    imgUploadCancel.removeEventListener('click', onUploadFormCloseClick);
     imgUploadForm.removeEventListener('submit', onImgUploadFormSubmit);
 
     document.removeEventListener('keydown', onUploadFormEscPress);
