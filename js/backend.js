@@ -2,8 +2,8 @@
 // модуль работы с сервером //
 (function () {
 
-  var SERVER_URL_GET = ' https://js.dump.academy/kekstagram/data';
-  var SERVER_URL_POST = ' https://js.dump.academy/kekstagram';
+  var SERVER_URL_GET = 'https://js.dump.academy/kekstagram/data';
+  var SERVER_URL_POST = 'https://js.dump.academy/kekstagram';
   var Code = {
     SUCCESSFUL: 200,
     REDIRECT: 300,

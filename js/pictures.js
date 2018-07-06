@@ -22,7 +22,7 @@
 
     photocardElement.addEventListener('click', function () {
       window.preview.renderMainPhotocard(item);
-      window.gallery.onOverlayOpen();
+      window.preview.onOverlayOpenClick();
     });
 
     return photocardElement;
@@ -38,12 +38,18 @@
   };
   // загрузка данных с сервера
   var userPhotos = [];
+
   var getUserPhotosFromServer = function (photo) {
     userPhotos = photo;
     createPhotoList(userPhotos);
-    imgFiltersForm.classList.remove('img-filters--inactive');
+    loadFilters();
   };
   window.backend.download(getUserPhotosFromServer, window.errorMessage.uploadDataMessageError);
+
+  var loadFilters = window.debounce(function () {
+    imgFiltersForm.classList.remove('img-filters--inactive');
+  });
+
   // функция, которая обновляет фото в зависимости от фильтра
   var updatePhotos = window.debounce(function (button, photos) {
     changeActiveButton(button);

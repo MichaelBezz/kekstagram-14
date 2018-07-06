@@ -2,13 +2,6 @@
 // наложение эффекта на изображение //
 (function () {
 
-  var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
-  var imgUploadScale = window.form.imgUpload.querySelector('.img-upload__scale');
-  var scalePin = imgUploadScale.querySelector('.scale__pin');
-  var scaleLine = imgUploadScale.querySelector('.scale__line');
-  var scaleValue = imgUploadScale.querySelector('.scale__value');
-  var scaleLevel = imgUploadScale.querySelector('.scale__level');
-
   var FILTER_SELECTOR_PREFIX = 'effect-';
   var FILTER_CLASS_PREFIX = 'effects__preview--';
   // массив, с объектами для работы с фильтрами
@@ -68,54 +61,58 @@
       }
     }
   ];
+
+  var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
+  var imgUploadScale = window.form.imgUpload.querySelector('.img-upload__scale');
+  var scalePin = imgUploadScale.querySelector('.scale__pin');
+  var scaleLine = imgUploadScale.querySelector('.scale__line');
+  var scaleValue = imgUploadScale.querySelector('.scale__value');
+  var scaleLevel = imgUploadScale.querySelector('.scale__level');
   // задаем фильтр по умолчанию
   var currentEffect = FILTERS[5];
   // функция, которая задает фильтр и значение пина по умолчанию, перебирает массив
-  window.onImageEffectSet = function () {
+  var onImageEffectAdd = function () {
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
     for (var i = 0; i < FILTERS.length; i++) {
       addEffectListener(i);
     }
-    changeDepthEffect();
+    scalePin.addEventListener('mousedown', changeDepthEffectMousedown);
   };
   // функция, которая отвечает за перемещение пина
-  var changeDepthEffect = function () {
+  var changeDepthEffectMousedown = function (evt) {
+    evt.preventDefault();
+    var startCoordX = evt.clientX;
 
-    scalePin.addEventListener('mousedown', function (evt) {
-      evt.preventDefault();
-      var startCoordX = evt.clientX;
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
 
-      var onMouseMove = function (moveEvt) {
-        moveEvt.preventDefault();
+      var shift = startCoordX - moveEvt.clientX;
+      startCoordX = moveEvt.clientX;
 
-        var shift = startCoordX - moveEvt.clientX;
-        startCoordX = moveEvt.clientX;
+      var MIN_SHIFT = 0;
+      var MAX_SHIFT = window.scaleLineWidth;
 
-        var MIN_SHIFT = 0;
-        var MAX_SHIFT = window.scaleLineWidth;
+      var currentCoord = scalePin.offsetLeft - shift;
+      if (currentCoord <= MAX_SHIFT && currentCoord > MIN_SHIFT) {
+        scalePin.style.left = currentCoord + 'px';
+        scaleLevel.style.width = currentCoord + 'px';
+      }
+    };
 
-        var currentCoord = scalePin.offsetLeft - shift;
-        if (currentCoord <= MAX_SHIFT && currentCoord > MIN_SHIFT) {
-          scalePin.style.left = currentCoord + 'px';
-          scaleLevel.style.width = currentCoord + 'px';
-        }
-      };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      setCurrentScaleValueMouseup();
+    };
 
-      var onMouseUp = function (upEvt) {
-        upEvt.preventDefault();
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        currentScaleValueMouseup();
-      };
-
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    });
-
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   };
+
   // функция, которая устанавливает глубину эффекта
-  var currentScaleValueMouseup = function () {
+  var setCurrentScaleValueMouseup = function () {
     var differenceEffectValue = currentEffect.effect.max - currentEffect.effect.min;
     var valueOfEffect = getScaleValue() * differenceEffectValue + currentEffect.effect.min;
     var valueOfEffectUnit = valueOfEffect + currentEffect.effect.unit;
@@ -163,6 +160,15 @@
     var currentValueScale = pinPositionOnLine / window.scaleLineWidth;
     scaleValue.value = Math.floor(currentValueScale * 100);
     return currentValueScale;
+  };
+
+  var onEffectListenersRemove = function () {
+    scalePin.removeEventListener('mousedown', changeDepthEffectMousedown);
+  };
+
+  window.imageEffect = {
+    onImageEffectAdd: onImageEffectAdd,
+    onEffectListenersRemove: onEffectListenersRemove
   };
 
 })();
