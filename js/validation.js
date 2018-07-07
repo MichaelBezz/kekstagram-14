@@ -81,23 +81,23 @@
     }
   });
 
-  var onValidationAdd = function () {
+  var validationListenersAdd = function () {
     // обработчик события - запускает валидацию формы хэш-тегов
     textHashtags.addEventListener('blur', onFormHashtagsValidityBlur);
     // обработчик события - запускает валидацию формы сообщений
     textDescription.addEventListener('blur', onFormTextDescriptionValidityBlur);
   };
 
-  var onValidationRemove = function () {
+  var validationListenersRemove = function () {
     textHashtags.removeEventListener('blur', onFormHashtagsValidityBlur);
     textDescription.removeEventListener('blur', onFormTextDescriptionValidityBlur);
+    textHashtags.value = '';
+    textDescription.value = '';
   };
 
   window.validation = {
-    textHashtags: textHashtags,
-    textDescription: textDescription,
-    onValidationAdd: onValidationAdd,
-    onValidationRemove: onValidationRemove
+    validationListenersAdd: validationListenersAdd,
+    validationListenersRemove: validationListenersRemove
   };
 
 })();

@@ -61,6 +61,7 @@
       }
     }
   ];
+  var FILTER_HEAT = 5;
 
   var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
   var imgUploadScale = window.form.imgUpload.querySelector('.img-upload__scale');
@@ -68,10 +69,11 @@
   var scaleLine = imgUploadScale.querySelector('.scale__line');
   var scaleValue = imgUploadScale.querySelector('.scale__value');
   var scaleLevel = imgUploadScale.querySelector('.scale__level');
-  // задаем фильтр по умолчанию
-  var currentEffect = FILTERS[5];
+  var currentEffect;
+
   // функция, которая задает фильтр и значение пина по умолчанию, перебирает массив
-  var onImageEffectAdd = function () {
+  var imageEffectAdd = function () {
+    currentEffect = FILTERS[FILTER_HEAT];
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
     for (var i = 0; i < FILTERS.length; i++) {
@@ -132,7 +134,7 @@
       window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     });
   };
-  // функция, которая удаляет классы стилей у элементов и назначает их
+  // функция, которая удаляет классы стилей у элементов
   var resetEffectClick = function () {
     window.form.imgUploadPreview.classList.remove(FILTER_CLASS_PREFIX + currentEffect.id);
     window.form.imgUploadPreview.style.filter = null;
@@ -162,13 +164,13 @@
     return currentValueScale;
   };
 
-  var onEffectListenersRemove = function () {
+  var effectListenersRemove = function () {
     scalePin.removeEventListener('mousedown', changeDepthEffectMousedown);
   };
 
   window.imageEffect = {
-    onImageEffectAdd: onImageEffectAdd,
-    onEffectListenersRemove: onEffectListenersRemove
+    imageEffectAdd: imageEffectAdd,
+    effectListenersRemove: effectListenersRemove
   };
 
 })();

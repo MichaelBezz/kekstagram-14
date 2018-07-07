@@ -41,20 +41,20 @@
     }
   };
 
-  var onScaleListenersAdd = function () {
+  var scaleListenersAdd = function () {
     resizeControlPlus.addEventListener('click', onPlusClick);
     resizeControlMinus.addEventListener('click', onMinusClick);
   };
 
-  var onScaleListenersRemove = function () {
+  var scaleListenersRemove = function () {
     resizeControlPlus.removeEventListener('click', onPlusClick);
     resizeControlMinus.removeEventListener('click', onMinusClick);
   };
 
   window.imageScale = {
     imageScaleAdd: imageScaleAdd,
-    onScaleListenersAdd: onScaleListenersAdd,
-    onScaleListenersRemove: onScaleListenersRemove
+    scaleListenersAdd: scaleListenersAdd,
+    scaleListenersRemove: scaleListenersRemove
   };
 
 })();

@@ -23,9 +23,9 @@
   // функция, которая удаляет элементы из контейнера
   var removeElements = function (container, selector) {
     var element = container.querySelectorAll(selector);
-    for (var i = 0; i < element.length; i++) {
-      container.removeChild(element[i]);
-    }
+    element.forEach(function (item, i) {
+      return container.removeChild(element[i]);
+    });
   };
 
   // функция, которая отображает комментарии
@@ -110,26 +110,27 @@
   // функция, для обработки события открытия + добавление обработки по клавиши esc
   var onOverlayOpenClick = function () {
     mainPhotocard.classList.remove('hidden');
-    document.addEventListener('keydown', onOverlayEscPress);
+
+    bigPicturesCancel.addEventListener('click', onOverlayClose);
+    document.addEventListener('keydown', onOverlayEscKeydown);
   };
   // функция, для обработки события закрытия + удаление обработки по клавиши esc
   var onOverlayClose = function () {
     mainPhotocard.classList.add('hidden');
+
     numberSocialComments = 0;
     commentShow.textContent = numberSocialComments;
+
     socialLoadmore.removeEventListener('click', onLoadMoreClick);
-    document.removeEventListener('keydown', onOverlayEscPress);
+    bigPicturesCancel.removeEventListener('click', onOverlayClose);
+    document.removeEventListener('keydown', onOverlayEscKeydown);
   };
   // функция, для обработки события закрытия по esc
-  var onOverlayEscPress = function (evt) {
+  var onOverlayEscKeydown = function (evt) {
     if (evt.keyCode === window.form.ESC_KEYCODE) {
       onOverlayClose();
     }
   };
-  // обработчик события - закрываем форму оверлея по нажатию на esc
-  mainPhotocard.addEventListener('keydown', onOverlayClose);
-  // обработчик события - закрываем форму оверлея по клику
-  bigPicturesCancel.addEventListener('click', onOverlayClose);
 
   window.preview = {
     renderMainPhotocard: renderMainPhotocard,
