@@ -3,7 +3,7 @@
 (function () {
 
   var ESC_KEYCODE = 27;
-  // var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   // Загрузка изображения и показ формы редактирования
   var imgUpload = document.querySelector('.img-upload');
@@ -12,13 +12,15 @@
   var imgUploadPreview = imgUpload.querySelector('.img-upload__preview');
   var imgUploadOverlay = imgUpload.querySelector('.img-upload__overlay');
   var imgUploadCancel = imgUpload.querySelector('.img-upload__cancel');
+  var fileChooser = imgUpload.querySelector('#upload-file');
+  var preview = imgUpload.querySelector('.img-upload__preview img');
 
   // функция, которая отправляем данные на сервер
   var onImgUploadFormSubmit = function (evt) {
     window.backend.upload(new FormData(imgUploadForm), onUploadFormCloseClick, window.errorMessage.uploadMessageError);
     evt.preventDefault();
   };
-  // функция, для обработки события открытия + добавление обработки по клавиши esc
+  // функция, для обработки события открытия
   var onUploadFormOpenChange = function () {
     imgUploadOverlay.classList.remove('hidden');
     imgUploadForm.addEventListener('submit', onImgUploadFormSubmit);
@@ -31,7 +33,7 @@
 
     document.addEventListener('keydown', onUploadFormEscKeydown);
   };
-  // функция, для обработки события закрытия + удаление обработки по клавиши esc
+  // функция, для обработки события закрытия
   var onUploadFormCloseClick = function () {
     imgUploadOverlay.classList.add('hidden');
     imgUploadForm.removeEventListener('submit', onImgUploadFormSubmit);
@@ -55,13 +57,8 @@
   // обработчик события - открываем форму редактирования изображения
   uploadFile.addEventListener('change', onUploadFormOpenChange);
 
-  /*
-  var fileChooser = imgUploadPreview.querySelector('input[type=file]');
-  var preview = imgUploadPreview.querySelector('');
-
-  fileChooser.addEventListener('change', onChangePhoto);
-
-  var onChangePhoto = function () {
+  // загрузка фотографии пользователя
+  fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
     var fileName = file.name.toLowerCase();
 
@@ -76,8 +73,7 @@
       });
       reader.readAsDataURL(file);
     }
-  };
-  */
+  });
 
   window.form = {
     imgUpload: imgUpload,
