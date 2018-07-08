@@ -72,6 +72,8 @@
         preview.src = reader.result;
       });
       reader.readAsDataURL(file);
+    } else {
+      window.errorMessage.uploadMessageError('Только фоточки формата: ' + FILE_TYPES.join(', '));
     }
   });
 

@@ -4,7 +4,6 @@
 
   var FILTER_SELECTOR_PREFIX = 'effect-';
   var FILTER_CLASS_PREFIX = 'effects__preview--';
-  // массив, с объектами для работы с фильтрами
   var FILTERS = [
     {
       id: 'none',
@@ -62,6 +61,7 @@
     }
   ];
   var FILTER_HEAT = 5;
+  var INPUT_FILTER_HEAT = window.form.imgUpload.querySelector('.effects__item input');
 
   var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
   var imgUploadScale = window.form.imgUpload.querySelector('.img-upload__scale');
@@ -74,6 +74,7 @@
   // функция, которая задает фильтр и значение пина по умолчанию, перебирает массив
   var imageEffectAdd = function () {
     currentEffect = FILTERS[FILTER_HEAT];
+    INPUT_FILTER_HEAT.checked = true;
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
     for (var i = 0; i < FILTERS.length; i++) {
