@@ -22,9 +22,9 @@
   };
   // функция, которая удаляет элементы из контейнера
   var removeElements = function (container, selector) {
-    var element = container.querySelectorAll(selector);
-    element.forEach(function (item, i) {
-      return container.removeChild(element[i]);
+    var element = Array.from(container.querySelectorAll(selector));
+    element.forEach(function (item) {
+      return container.removeChild(item);
     });
   };
 

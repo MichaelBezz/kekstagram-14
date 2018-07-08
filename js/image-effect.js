@@ -61,7 +61,7 @@
     }
   ];
   var FILTER_HEAT = 5;
-  var INPUT_FILTER_HEAT = window.form.imgUpload.querySelector('.effects__item input');
+  var INPUT_FILTER_HEAT = window.form.imgUpload.querySelector('#effect-heat');
 
   var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
   var imgUploadScale = window.form.imgUpload.querySelector('.img-upload__scale');

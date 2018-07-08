@@ -36,9 +36,9 @@
   var fragment = document.createDocumentFragment();
   var createPhotoList = function (photocards) {
     window.preview.removeElements(photocardListElement, '.picture__link');
-    for (var i = 0; i < photocards.length; i++) {
-      fragment.appendChild(renderPhotocard(photocards[i]));
-    }
+    photocards.forEach(function (item) {
+      return fragment.appendChild(renderPhotocard(item));
+    });
     photocardListElement.appendChild(fragment);
   };
   // загрузка данных с сервера
