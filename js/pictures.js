@@ -37,7 +37,7 @@
   var createPhotoList = function (photocards) {
     window.preview.removeElements(photocardListElement, '.picture__link');
     photocards.forEach(function (item) {
-      return fragment.appendChild(renderPhotocard(item));
+      fragment.appendChild(renderPhotocard(item));
     });
     photocardListElement.appendChild(fragment);
   };

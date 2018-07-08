@@ -24,7 +24,7 @@
   var removeElements = function (container, selector) {
     var element = Array.from(container.querySelectorAll(selector));
     element.forEach(function (item) {
-      return container.removeChild(item);
+      container.removeChild(item);
     });
   };
 
@@ -73,7 +73,7 @@
 
   // функция, которая создает сложную разметку для комментариев
   var renderComments = function (comments) {
-    for (var i = 0; i < comments.length; i++) {
+    comments.forEach(function (item) {
       var imgSrc = 'img/avatar-' + getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg';
 
       var comment = document.createElement('li');
@@ -88,12 +88,12 @@
 
       var commentText = document.createElement('li');
       commentText.classList.add('social__text');
-      commentText.textContent = comments[i];
+      commentText.textContent = item;
 
       comment.appendChild(commentImg);
       comment.appendChild(commentText);
       socialComments.appendChild(comment);
-    }
+    });
   };
 
   // функция, которая создает оверлэй

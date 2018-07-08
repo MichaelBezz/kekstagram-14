@@ -31,28 +31,28 @@
       textHashtags.classList.remove('messege-error-border');
     }
 
-    for (var i = 0; i < arrHashtags.length; i++) {
-      if (arrHashtags[i] === '#') {
+    arrHashtags.forEach(function (item) {
+      if (item === '#') {
         textHashtags.setCustomValidity('Хэш-тег не может содержать только #');
         textHashtags.classList.add('messege-error-border');
-      } else if (arrHashtags[i][0] !== '#') {
+      } else if (item[0] !== '#') {
         textHashtags.setCustomValidity('Хэш-тег должен начинаться с #');
         textHashtags.classList.add('messege-error-border');
-      } else if (arrHashtags[i].length > MAX_SIMBOL_HASHTAG) {
+      } else if (item.length > MAX_SIMBOL_HASHTAG) {
         textHashtags.setCustomValidity('Длина одного хэш-тега не может превышать 20 символов');
         textHashtags.classList.add('messege-error-border');
       } else {
         textHashtags.setCustomValidity('');
         textHashtags.classList.remove('messege-error-border');
       }
-    }
+    });
 
     var newArrHashtags = [];
-    for (var j = 0; j < arrHashtags.length; j++) {
-      if (arrHashtags.indexOf(arrHashtags[j]) === j) {
-        newArrHashtags.push(arrHashtags[j]);
+    arrHashtags.forEach(function (item, i) {
+      if (arrHashtags.indexOf(item) === i) {
+        newArrHashtags.push(item);
       }
-    }
+    });
     textHashtags.value = newArrHashtags.join(' ');
 
   };

@@ -77,9 +77,9 @@
     INPUT_FILTER_HEAT.checked = true;
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
-    for (var i = 0; i < FILTERS.length; i++) {
-      addEffectListener(i);
-    }
+    FILTERS.forEach(function (item) {
+      addEffectListener(item);
+    });
     scalePin.addEventListener('mousedown', changeDepthEffectMousedown);
   };
   // функция, которая отвечает за перемещение пина
@@ -122,14 +122,14 @@
     window.form.imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffectUnit + ')';
   };
   // функция, которая выбирает фильтр и обновляет значение переменной текущего фильтра
-  var addEffectListener = function (i) {
-    var effectId = FILTER_SELECTOR_PREFIX + FILTERS[i].id;
+  var addEffectListener = function (item) {
+    var effectId = FILTER_SELECTOR_PREFIX + item.id;
     var effectElement = imgUploadEffects.querySelector('#' + effectId);
     effectElement.addEventListener('click', function () {
       resetEffectClick();
       startValuePin();
-      currentEffect = FILTERS[i];
-      if (FILTERS[i].id === 'none') {
+      currentEffect = item;
+      if (item.id === 'none') {
         imgUploadScale.classList.add('hidden');
       }
       window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
