@@ -4,7 +4,6 @@
 
   var FILTER_SELECTOR_PREFIX = 'effect-';
   var FILTER_CLASS_PREFIX = 'effects__preview--';
-  // массив, с объектами для работы с фильтрами
   var FILTERS = [
     {
       id: 'none',
@@ -61,6 +60,8 @@
       }
     }
   ];
+  var FILTER_HEAT = 5;
+  var INPUT_FILTER_HEAT = window.form.imgUpload.querySelector('#effect-heat');
 
   var imgUploadEffects = window.form.imgUpload.querySelector('.img-upload__effects');
   var imgUploadScale = window.form.imgUpload.querySelector('.img-upload__scale');
@@ -68,15 +69,17 @@
   var scaleLine = imgUploadScale.querySelector('.scale__line');
   var scaleValue = imgUploadScale.querySelector('.scale__value');
   var scaleLevel = imgUploadScale.querySelector('.scale__level');
-  // задаем фильтр по умолчанию
-  var currentEffect = FILTERS[5];
+  var currentEffect;
+
   // функция, которая задает фильтр и значение пина по умолчанию, перебирает массив
-  var onImageEffectAdd = function () {
+  var imageEffectAdd = function () {
+    currentEffect = FILTERS[FILTER_HEAT];
+    INPUT_FILTER_HEAT.checked = true;
     window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     startValuePin();
-    for (var i = 0; i < FILTERS.length; i++) {
-      addEffectListener(i);
-    }
+    FILTERS.forEach(function (item) {
+      addEffectListener(item);
+    });
     scalePin.addEventListener('mousedown', changeDepthEffectMousedown);
   };
   // функция, которая отвечает за перемещение пина
@@ -119,20 +122,20 @@
     window.form.imgUploadPreview.style.filter = currentEffect.effect.name + '(' + valueOfEffectUnit + ')';
   };
   // функция, которая выбирает фильтр и обновляет значение переменной текущего фильтра
-  var addEffectListener = function (i) {
-    var effectId = FILTER_SELECTOR_PREFIX + FILTERS[i].id;
+  var addEffectListener = function (item) {
+    var effectId = FILTER_SELECTOR_PREFIX + item.id;
     var effectElement = imgUploadEffects.querySelector('#' + effectId);
     effectElement.addEventListener('click', function () {
       resetEffectClick();
       startValuePin();
-      currentEffect = FILTERS[i];
-      if (FILTERS[i].id === 'none') {
+      currentEffect = item;
+      if (item.id === 'none') {
         imgUploadScale.classList.add('hidden');
       }
       window.form.imgUploadPreview.classList.add(FILTER_CLASS_PREFIX + currentEffect.id);
     });
   };
-  // функция, которая удаляет классы стилей у элементов и назначает их
+  // функция, которая удаляет классы стилей у элементов
   var resetEffectClick = function () {
     window.form.imgUploadPreview.classList.remove(FILTER_CLASS_PREFIX + currentEffect.id);
     window.form.imgUploadPreview.style.filter = null;
@@ -162,13 +165,13 @@
     return currentValueScale;
   };
 
-  var onEffectListenersRemove = function () {
+  var effectListenersRemove = function () {
     scalePin.removeEventListener('mousedown', changeDepthEffectMousedown);
   };
 
   window.imageEffect = {
-    onImageEffectAdd: onImageEffectAdd,
-    onEffectListenersRemove: onEffectListenersRemove
+    imageEffectAdd: imageEffectAdd,
+    effectListenersRemove: effectListenersRemove
   };
 
 })();

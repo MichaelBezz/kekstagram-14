@@ -4,6 +4,11 @@
 
   var RANDOM_PHOTOS_COUNT = 10;
 
+  var Filter = {
+    POPULAR: 'popular',
+    NEW: 'new',
+    DISCUSS: 'discuss'
+  };
   var imgFiltersForm = document.querySelector('.img-filters');
   var filterPopular = imgFiltersForm.querySelector('#filter-popular');
   var filterNew = imgFiltersForm.querySelector('#filter-new');
@@ -31,9 +36,9 @@
   var fragment = document.createDocumentFragment();
   var createPhotoList = function (photocards) {
     window.preview.removeElements(photocardListElement, '.picture__link');
-    for (var i = 0; i < photocards.length; i++) {
-      fragment.appendChild(renderPhotocard(photocards[i]));
-    }
+    photocards.forEach(function (item) {
+      fragment.appendChild(renderPhotocard(item));
+    });
     photocardListElement.appendChild(fragment);
   };
   // загрузка данных с сервера
@@ -60,10 +65,10 @@
     var photos;
     var button;
 
-    if (filterType === 'popular') {
+    if (filterType === Filter.POPULAR) {
       photos = userPhotos;
       button = filterPopular;
-    } else if (filterType === 'new') {
+    } else if (filterType === Filter.NEW) {
       var newArr = userPhotos.slice();
       newArr.sort(function () {
         return Math.random() - 0.5;
@@ -82,15 +87,15 @@
   };
   // обработчик события - фильтр популярные
   filterPopular.addEventListener('click', function () {
-    onFilterChange('popular');
+    onFilterChange(Filter.POPULAR);
   });
   // обработчик события - фильтр новые
   filterNew.addEventListener('click', function () {
-    onFilterChange('new');
+    onFilterChange(Filter.NEW);
   });
   // обработчик события - фильтр обсуждаемые
   filterDiscussed.addEventListener('click', function () {
-    onFilterChange('discuss');
+    onFilterChange(Filter.DISCUSS);
   });
   // функция, которая изменяет активную кнопку
   var changeActiveButton = function (activeButton) {

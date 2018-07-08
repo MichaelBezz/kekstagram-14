@@ -629,8 +629,6 @@ main {
 
   width: 600px;
   height: 600px;
-
-  background-color: #ffffff;
 }
 
 .img-upload__preview img {
@@ -1304,7 +1302,6 @@ main {
 }
 
 .messege-error-border {
-  border: 5px solid red;
+  border: 3px solid red;
   border-radius: 10px;
 }
-
