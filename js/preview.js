@@ -88,7 +88,7 @@
 
       var commentText = document.createElement('li');
       commentText.classList.add('social__text');
-      commentText.textContent = item;
+      commentText.textContent = item.message;
 
       comment.appendChild(commentImg);
       comment.appendChild(commentText);
