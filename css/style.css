@@ -269,14 +269,14 @@ main {
   width: 20px;
   height: 16px;
 
-  background-position: 0 -53px;
+  background-position: 0 -58px;
 }
 
 .picture__stat--likes::before {
   width: 20px;
   height: 16px;
 
-  background-position: 0 -80px;
+  background-position: 0 -88px;
 }
 
 
@@ -1004,7 +1004,7 @@ main {
   background-image: url("../img/sprite.svg");
   background-size: 100%;
 
-  background-position: 0 -150px;
+  background-position: 0 -148px;
   opacity: 0.5;
 }
 
