@@ -7,7 +7,7 @@
 
 ### Демонстрация проекта:
 
-["KEKSTAGRAM"](https://michaelbezz.github.io/782277-kekstagram/) - фотки кексов
+["KEKSTAGRAM"](https://michaelbezz.github.io/kekstagram/) - фотки кексов
 
 ---
 
