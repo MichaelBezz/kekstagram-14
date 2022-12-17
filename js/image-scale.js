@@ -1,5 +1,4 @@
 'use strict';
-// масштаб: редактирование размера изображения //
 (function () {
 
   var MAX_SIZE_VALUE = 100;

@@ -1,5 +1,4 @@
 'use strict';
-// модуль для устранения дребезга //
 (function () {
 
   var TIMEOUT = 500;

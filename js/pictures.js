@@ -1,5 +1,4 @@
 'use strict';
-// модуль для отрисовки миниатюры //
 (function () {
 
   var RANDOM_PHOTOS_COUNT = 10;
@@ -32,7 +31,7 @@
 
     return photocardElement;
   };
-  // функция, которая добавяляет фотографии на страницу
+  // функция, которая добавляет фотографии на страницу
   var fragment = document.createDocumentFragment();
   var createPhotoList = function (photocards) {
     window.preview.removeElements(photocardListElement, '.picture__link');

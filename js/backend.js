@@ -1,5 +1,4 @@
 'use strict';
-// модуль работы с сервером //
 (function () {
 
   var SERVER_URL_GET = 'https://26.javascript.pages.academy/kekstagram/data';
@@ -22,7 +21,7 @@
       if (xhr.status === Code.SUCCESSFUL) {
         onLoad(xhr.response);
       } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
@@ -42,7 +41,7 @@
           break;
 
         default:
-          messageError = 'Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText;
+          messageError = 'Статус ответа: ' + xhr.status + ' ' + xhr.statusText;
       }
       onError(messageError);
     });

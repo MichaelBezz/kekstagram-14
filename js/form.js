@@ -1,5 +1,4 @@
 'use strict';
-// модуль, который работает с формой редактирования изображения //
 (function () {
 
   var ESC_KEYCODE = 27;
@@ -73,7 +72,7 @@
       });
       reader.readAsDataURL(file);
     } else {
-      window.errorMessage.uploadMessageError('Только фоточки формата: ' + FILE_TYPES.join(', '));
+      window.errorMessage.uploadMessageError('Только фотографии формата: ' + FILE_TYPES.join(', '));
     }
   });
 

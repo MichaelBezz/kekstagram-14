@@ -1,5 +1,4 @@
 'use strict';
-// наложение эффекта на изображение //
 (function () {
 
   var FILTER_SELECTOR_PREFIX = 'effect-';

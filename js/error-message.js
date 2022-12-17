@@ -1,14 +1,13 @@
 'use strict';
-// служебные сообщения //
 (function () {
 
   var uploadDataMessageError = function (message) {
     var node = document.createElement('div');
-    node.classList.add('messege-error');
+    node.classList.add('message-error');
     node.textContent = message;
 
     var closeNode = document.createElement('button');
-    closeNode.classList.add('messege-error-close');
+    closeNode.classList.add('message-error-close');
     closeNode.textContent = 'Попробовать еще раз';
 
     closeNode.addEventListener('click', function () {

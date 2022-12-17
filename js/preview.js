@@ -1,9 +1,8 @@
 'use strict';
-// модуль для отрисовки увеличенного изображения //
 (function () {
 
-  var START_EXAMPLE_IMGURL = 1;
-  var END_EXAMPLE_IMGURL = 6;
+  var START_EXAMPLE_IMG = 1;
+  var END_EXAMPLE_IMG = 6;
   var MAX_COMMENT_COUNT = 5;
 
   var mainPhotocard = document.querySelector('.big-picture');
@@ -74,7 +73,7 @@
   // функция, которая создает сложную разметку для комментариев
   var renderComments = function (comments) {
     comments.forEach(function (item) {
-      var imgSrc = 'img/avatar-' + getRandomNumber(START_EXAMPLE_IMGURL, END_EXAMPLE_IMGURL) + '.svg';
+      var imgSrc = 'img/avatar-' + getRandomNumber(START_EXAMPLE_IMG, END_EXAMPLE_IMG) + '.svg';
 
       var comment = document.createElement('li');
       comment.classList.add('social__comment', 'social__comment--text');

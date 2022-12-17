@@ -201,9 +201,7 @@ main {
   display: -ms-grid;
   display: grid;
   grid-gap: 10px;
-
-  -ms-grid-columns: (1fr)[7];
-      grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .picture__link {
@@ -1240,7 +1238,6 @@ main {
   }
 
   .pictures {
-    -ms-grid-columns: (1fr)[5];
     grid-template-columns: repeat(5, 1fr);
   }
 
@@ -1261,7 +1258,6 @@ main {
   }
 
   .pictures {
-    -ms-grid-columns: (1fr)[3];
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -1276,7 +1272,7 @@ main {
   }
 }
 
-.messege-error {
+.message-error {
   position: absolute;
   z-index: 100;
   left: 0;
@@ -1288,7 +1284,7 @@ main {
   background-color: red;
 }
 
-.messege-error-close {
+.message-error-close {
   position: absolute;
   z-index: 101;
   left: 90%;
@@ -1300,7 +1296,7 @@ main {
   border-radius: 10px;
 }
 
-.messege-error-border {
+.message-error-border {
   border: 3px solid red;
   border-radius: 10px;
 }
