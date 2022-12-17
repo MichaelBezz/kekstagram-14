@@ -7,7 +7,7 @@
 
 ### Демонстрация проекта:
 
-["KEKSTAGRAM"](https://michaelbezz.github.io/kekstagram/) - сервис просмотра изображений
+["KEKSTAGRAM"](https://michaelbezz.github.io/kekstagram-14/) - сервис просмотра изображений
 
 ---
 
